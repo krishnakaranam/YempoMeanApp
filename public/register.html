@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = "Yempo">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=PT+Sans'>
+  <link rel="stylesheet" href="css/styleLogin.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class='container' ng-controller="RegisterController">
+    <div class='card'>
+	  <form class="login-form" ng-submit="register(user)">
+					<span class="login-form-title">
+						Register
+					</span>
+
+					<div ng-show="error" style="color:red" id="errorMessage" ><strong>{{error.message}}</strong> </div>
+
+					<div class="email-validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input ng-model="user.username" class="input-email" type="email" name="email" placeholder="Email" required>
+					</div>
+
+					<div class="password-validate-input" data-validate="Password is required">
+						<input ng-model="user.password" class="input-password" type="password" name="pass" placeholder="Password" required>
+					</div>
+					
+					<div class="password-validate-input" data-validate="Password is required">
+						<input ng-model="user.verifypassword" class="input-password" type="password" name="pass" placeholder="Retype Password" required>
+					</div>
+					
+					<div class="password-validate-input" data-validate="Registration Key is required">
+						<input ng-model="user.registrationkey" class="input-password" type="text" name="pass" placeholder="Registration Key" required>
+					</div>
+
+		  			<div class="signin-form-btn" align = "center">
+						  <button type="submit" class="signin-btn">register</button>
+		  			</div>
+				</form>
+    </div>
+  </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+
+<div class='container' ng-controller="LoginController">
+    <div class='card'>
+        <form class="login-form" ng-submit="login(user)">
+					<span class="login-form-title">
+						Account Login
+					</span>
+
+            <div ng-show="error" style="color:red" id="errorMessage" ><strong>{{error.message}}</strong> </div>
+            <div class="email-validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+                <input ng-model="user.username"  class="input-email" type="email" name="email" placeholder="Email" required>
+            </div>
+
+            <div class="password-validate-input" data-validate="Password is required">
+                <input ng-model="user.password" class="input-password" type="password" name="pass" placeholder="Password" required>
+            </div>
+
+            <div class="signin-form-btn" align = "center">
+                <button type="submit" class="signin-btn">
+                    Sign in
+                </button>
+            </div>
+
+            <div class="forgot-center">
+						<span class="forgot">
+							Forgot
+						</span>
+
+                <a href="#" class="un-pw">
+                    Username / Password?
+                </a>
+            </div>
+
+            <div class="register-center">
+						<span class="register">
+							Create an account?
+						</span>
+
+                <a href="#!register" class="Signup">
+                    Sign up
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

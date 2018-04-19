@@ -1,0 +1,140 @@
+* { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0vw;
+  padding: 0vw;
+}
+
+@font-face {
+    font-family: 'hiragino_sans_gbw3';
+    src: url('fonts/hiragino_sans_gb_w3-webfont.woff2') format('woff2'),
+         url('fonts/hiragino_sans_gb_w3-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: Arial;
+}
+
+@font-face {
+    font-family: 'mort_modern08_regular';
+    src: url('mortmodern-08regular-webfont.woff2') format('woff2'),
+         url('mortmodern-08regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'mort_modern11_bold_italic';
+    src: url('mortmodern-11bolditalic-webfont.woff2') format('woff2'),
+         url('mortmodern-11bolditalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: Bold Italic;
+}
+
+html {
+  background: #F1F1F1;
+}
+
+.details{
+  align-items: center;
+  letter-spacing: 0.5px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.card{
+  background: #f9f9f9;
+  width: 100vw;
+  height: 100vh;
+}
+
+.login-form {
+  position: absolute;
+  margin: 35vw 25vw 10vw 20vw;
+  line-height: 9vw;
+}
+
+.login-form-title {
+  font-family: Arial;
+  color: #333333;
+  font-size: 10vw;
+}
+
+.input-email{
+  background:#ecf0f1;
+  border: #ccc 0.1vw solid;
+  border-bottom: #ccc 0.2vw solid;
+  padding: 3vw;
+  width:50vw;
+  color:#AAAAAA;
+  margin-top:5vw;
+  margin-bottom:3vw;
+  font-family: Arial;
+  font-size:3vw;
+  border-radius:2vw;
+}
+
+.input-password{
+  background:#ecf0f1;
+  border: #ccc 0.1vw solid;
+  border-bottom: #ccc 0.2vw solid;
+  padding: 3vw;
+  width:50vw;
+  color:#AAAAAA;
+  margin-bottom:3vw;
+  font-family: Arial;
+  font-size:3vw;
+  border-radius:2vw;
+}
+
+.signin-form-btn{
+  margin-top:3vw;
+  margin-bottom:3vw;
+}
+
+.signin-btn {
+  font-family: Arial;
+  text-decoration: none;
+  align-items: center;
+  font-size: 4vw;
+  margin-right: 5vw;
+  color: #333333;
+  background:#2ecc71;
+  padding: 2vw 6vw 2vw 6vw;
+  width: 25vw;
+  border-radius:2vw;
+  border: #27ae60 0.1vw solid;
+}
+
+.signin-btn:hover{
+  background:#2CC06B; 
+}
+
+.forgot-center {
+  font-family: Arial;
+  color: #333333;
+  font-size: 4vw;
+}
+
+.un-pw {
+  font-family: Arial;
+  color: #3881f7;
+  font-size: 3vw;
+}
+
+.register-center {
+  font-family: Arial;
+  color: #333333;
+  font-size: 4vw;
+}
+
+.Signup {
+  font-family: Arial;
+  color: #3881f7;
+  font-size: 3vw;
+}

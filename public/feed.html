@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = "Yempo">
+
+<head>
+  <meta charset="UTF-8">
+  <title>feed page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=PT+Sans'>
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+
+  <link rel="stylesheet" href="css/styleFeed.css">
+
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+  <!-- Angular -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
+
+  <!-- app js -->
+  <script src="./app.js"></script>
+
+  <!-- services -->
+  <!-- user -->
+  <script src="./services/user.service.client.js"></script>
+  <!-- post -->
+  <script src="./services/post.service.client.js"></script>
+
+</head>
+<body>
+
+  <div class='container' ng-controller="FeedController">
+    <div ng-show="openslide" id="side-menu" class="side-nav">
+      <a class="btn-close" ng-click="closeSlideMenu()">&times;</a>
+      <span></br></br></span>
+      <a ng-click="openFilters()">Filters</a>
+      <a ng-click="openProfile()">Profile</a>
+      <a ng-click="openReach()">Reach</a>
+      <a href="#">Logout</a>
+    </div>
+    <div class='card'>
+      <div class="add-btn"><a class="fa fa-arrow-right" ng-click="openSlideMenu()"></a></div>
+     
+	  <div class="filter">
+        <select id='filters'>
+			<option value="volvo">Filter</option>
+			<option value="saab">project1</option>
+			<option value="mercedes">project2</option>
+			<option value="audi">project3</option>
+		</select>
+      </div>
+	  
+	  <div class="sort">
+        <select id='sorts'>
+			<option value="volvo">Sort</option>
+			<option value="saab">likes</option>
+			<option value="mercedes">shares</option>
+			<option value="audi">re-tweets</option>
+		</select>
+      </div>
+	  
+	  <div class="feedheading">
+          <h5>Feed</h5>
+      </div>
+	  
+	  <div class="search">
+          <input type="text" placeholder="Search..">
+      </div>
+	 
+      <div class="post" id="writepost">
+        <div class="avatar"><img src={{currentUser.profilepic}}/></div>
+        <div class="name">
+          <h5>{{currentUser.name}}</h5>
+        </div>
+        
+		<a class="btn-close" id="closepost" ng-click="closeWritePost()">&times;</a>
+        <hr class = "aftername">
+        <form ng-submit="createPost(newpost)">
+        <div class="write">
+          <textarea ng-model="newpost.text" id="textpost" class="write-post" placeholder="  Write post here ..." ng-click="openWritePost()"></textarea>
+        </div>
+        <div class="attach">
+          <span id='attachment'><i class="fa fa-paperclip"></i></span>
+        </div>
+        <hr id="blackline">
+		    <div class="share" id="shpost">
+          <h6>share post to:</h6>
+        </div>
+		    <div class="fb" id="fbicon">
+          <a class="fa fa-facebook-square" href="#"></a>
+        </div>
+        <div class="twit" id="twiticon">
+          <a class="fa fa-twitter-square" href="#"></a>
+        </div>
+        <div class="facebookcheck" id="facecheck">
+        Facebook: <input type="checkbox" id="facebookcheck" disabled>
+        </div>
+        <div class="twitcheck" id="twitcheck">
+        Twitter: <input type="checkbox" id="twittercheck" checked>
+        </div>
+        <div class="share-btn" id="sharebt">
+            <button type="submit" class="btn" id="share">share</button>
+        </div>
+        </form>
+      </div>
+
+
+
+
+
+
+      <div class="feed" ng-repeat="post in currentFeed">
+        <div class="avatar"><img src={{post.profilepic}}/></div>
+        <div class="name">
+          <h5>{{post.username}}</h5>
+        </div>
+        <div class="clapcircle">
+          <span id='clapcircle'><i class="fa fa-circle"></i></span>
+        </div>
+        <div class="clapcirclelike">
+          <span id='clapcirclelike'><i class="fa fa-circle"></i></span>
+        </div>
+        <div class="clapcirclelikenum">
+          <span id='clapcirclelikenum'>{{post.claps}}</span>
+        </div>
+        <div class="clap">
+          <span id='clap'><i class="fa fa-hand-paper-o" ></i></span>
+        </div>
+        <hr>
+        <div ng-show="post.image" class="images"><img src={{post.image}} alt="image" /></div>
+        <hr class="img">
+        <div class="feedtext" id="feedtext1">
+          <p>{{post.text}}</p>
+        </div>
+        <div class="expand">
+          <span id="expand"><i class="fa fa-expand" onclick="enlarge()"></i></span>
+        </div>
+        <hr class="img">
+        <div class="like">
+          <span id='like'><i class="fa fa-thumbs-up" onclick="facebookLike()"></i></span>
+        </div>
+        <div class="likenum">
+          <span id='likenum' >{{post.likes}}</span>
+        </div>
+        <div class="share">
+          <span id='share'><i class="fa fa-share" onclick="facebookShare()"></i></span>
+        </div>
+        <div class="sharenum">
+          <span id='sharenum'>{{post.shares}}</span>
+        </div>
+        <div class="open">
+          <span id='open'><i class="fa fa-facebook-square"></i></span>
+        </div>
+        <p class="end"></p>
+        <hr>
+        <div class="twitlike">
+          <span id='twitlike'><i class="fa fa-heart" ng-click="favoritePostById(post._id)"></i></span>
+        </div>
+        <div class="tweetlikenum">
+          <span id='tweetlikenum'>{{post.favorites}}</span>
+        </div>
+        <div class="twitshare">
+          <span id='twitshare'><i class="fa fa-retweet" ng-click="retweetPostById(post._id)"></i></span>
+        </div>
+        <div class="twitsharenum">
+          <span id='twitsharenum'>{{post.retweets}}</span>
+        </div>
+        <div class="twitopen">
+          <span id='twitopen'><a href={{post.twitterurl}} target="_blank"><i class="fa fa-twitter-square" ></i></a></span>
+        </div>
+        <p class="end"></p>
+        <hr>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      <div class="feed">
+        <div class="avatar"><img src="http://www.fillmurray.com/50/50"/></div>
+        <div class="name">
+          <h5>Bruce Wayne</h5>
+        </div>
+        <div class="clapcircle">
+          <span id='clapcircle'><i class="fa fa-circle"></i></span>
+        </div>
+		<div class="clapcirclelike">
+          <span id='clapcirclelike'><i class="fa fa-circle"></i></span>
+        </div>
+		<div class="clapcirclelikenum">
+          <span id='clapcirclelikenum'>12</span>
+        </div>
+        <div class="clap">
+          <span id='clap'><i class="fa fa-hand-paper-o" onclick="clap()"></i></span>
+        </div>
+        <hr>
+        <div class="images"><img src="http://www.fillmurray.com/1920/1080" alt="image" /></div>
+        <hr class="img">
+        <div class="feedtext" id="feedtext1">
+          <p>Come join us lorem ipsum Come join us lorem ipsum Come join us lorem ipsum Come join us lorem ipsum Come join us lorem ipsum ...</p>
+        </div>
+        <div class="expand">
+          <span id="expand"><i class="fa fa-expand" onclick="enlarge()"></i></span>
+        </div>
+        <hr class="img">
+        <div class="like">
+          <span id='like'><i class="fa fa-thumbs-up" onclick="facebookLike()"></i></span>
+        </div>
+		<div class="likenum">
+          <span id='likenum' >15</span>
+        </div>
+        <div class="share">
+          <span id='share'><i class="fa fa-share" onclick="facebookShare()"></i></span>
+        </div>
+		<div class="sharenum">
+          <span id='sharenum'>8</span>
+        </div>
+        <div class="open">
+          <span id='open'><i class="fa fa-facebook-square"></i></span>
+        </div>
+		<p class="end"></p>
+        <hr>
+        <div class="twitlike">
+          <span id='twitlike'><i class="fa fa-heart" onclick="twitLike()"></i></span>
+        </div>
+		<div class="tweetlikenum">
+          <span id='tweetlikenum'>18</span>
+        </div>
+        <div class="twitshare">
+          <span id='twitshare'><i class="fa fa-retweet" onclick="twitShare()"></i></span>
+        </div>
+		<div class="twitsharenum">
+          <span id='twitsharenum'>7</span>
+        </div>
+        <div class="twitopen">
+          <span id='twitopen'><i class="fa fa-twitter-square"></i></span>
+        </div>
+        <p class="end"></p>
+		<hr>
+      </div>
+
+	
+      <div class="feed">
+        <div class="avatar"><img src="http://www.fillmurray.com/50/50"/></div>
+        <div class="name">
+          <h5>Alexander Jackson</h5>
+        </div>
+        <div class="clapcircle">
+          <span id='clapcircle'><i class="fa fa-circle"></i></span>
+        </div>
+		<div class="clapcirclelike">
+          <span id='clapcirclelike'><i class="fa fa-circle"></i></span>
+        </div>
+		<div class="clapcirclelikenum">
+          <span id='clapcirclelikenum2'>29</span>
+        </div>
+        <div class="clap">
+          <span id='clap'><i class="fa fa-hand-paper-o" onclick="clap2()"></i></span>
+        </div>
+        <hr>
+        <div class="images"><img src="http://www.fillmurray.com/1350/1350" alt="image"/></div>
+        <hr class="img">
+        <div class="feedtext">
+          <p>Come join us lorem ipsum...</p>
+        </div>
+        <div class="expand">
+          <span id="expand"><i class="fa fa-expand"></i></span>
+        </div>
+        <hr class="img">
+        <div class="like">
+          <span id='like'><i class="fa fa-thumbs-up" onclick="facebookLike2()"></i></span>
+        </div>
+		<div class="likenum">
+          <span id='likenum2'>5</span>
+        </div>
+        <div class="share">
+          <span id='share'><i class="fa fa-share" onclick="facebookShare2()"></i></span>
+        </div>
+		<div class="sharenum">
+          <span id='sharenum2'>2</span>
+        </div>
+        <div class="open">
+          <span id='open'><i class="fa fa-facebook-square"></i></span>
+        </div>
+        <p class="end"></p>
+        <hr>
+        
+        <div class="twitlike">
+          <span id='twitlike'><i class="fa fa-heart" onclick="twitLike2()"></i></span>
+        </div>
+		<div class="tweetlikenum">
+          <span id='tweetlikenum2'>15</span>
+        </div>
+        <div class="twitshare">
+          <span id='twitshare'><i class="fa fa-retweet" onclick="twitShare2()"></i></span>
+        </div>
+		<div class="twitsharenum">
+          <span id='twitsharenum2'>15</span>
+        </div>
+        <div class="twitopen">
+          <span id='twitopen'><i class="fa fa-twitter-square"></i></span>
+        </div>
+        <p class="end"> </p>
+		<hr>
+      </div>
+    
+    </div>
+  </div>
+  
+  <script src="js/indexFeed.js"></script>
+
+</body>
+
+</html>

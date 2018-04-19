@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = "Yempo">
+
+<head>
+  <meta charset="UTF-8">
+  <title>profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=PT+Sans'>
+  <link rel="stylesheet" href="css/styleProfile.css">
+
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+  <!-- Angular -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
+
+  <!-- app js -->
+  <script src="./app.js"></script>
+
+  <!-- services -->
+  <!-- user -->
+  <script src="./services/user.service.client.js"></script>
+  <!-- post -->
+  <script src="./services/post.service.client.js"></script>
+
+</head>
+
+<body>
+
+  <div class='container' ng-controller="ProfileController">
+    <div ng-show="openslide" id="side-menu" class="side-nav">
+      <a class="btn-close" ng-click="closeSlideMenu()">&times;</a>
+	  <span></br></br></span>
+      <a ng-click="openFilters()">Filters</a>
+      <a ng-click="openFeed()">Feed</a>
+	  <a ng-click="openReach()">Reach</a>
+      <a href="#">Logout</a>
+    </div>
+    <div class='card'>
+      <div class="add-btn"><a class="fa fa-arrow-right" ng-click="openSlideMenu()"></a></div>
+      <div class="avatar"><img src={{currentUser.profilepic}} width="150" height="150"/></div>
+      <div class="hi">
+        <h5>Hi, {{currentUser.name}}</h5>
+      </div>
+      <div class="details">
+      <div class="email">
+        <span class="id">email </span><span class="emailid">{{currentUser.username}}</span>
+      </div>
+      <div class="linked-accounts">
+        <span class="linked">linked accounts</span>
+        <div class="social-media">
+          <div class="fb">
+          <a class="fa fa-facebook-square" href="#"></a>
+          </div>
+          <div class="twit">
+          <a class="fa fa-twitter-square" href="#"></a>
+          </div>
+        </div>
+      </div>
+        <button class="btn" id="addaccount">add account</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

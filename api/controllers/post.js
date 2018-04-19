@@ -39,8 +39,8 @@ exports.get_feed = (req, res, next) => {
                         }
                     }
                     return {
-                        profilepic: user[0].profilepic,
-                        username: user[0].name,
+                        profilepic: post.creatorprofilepic,
+                        username: post.creatorname,
                         claps: post.claps.length,
                         clapped: Clapped,
                         image: post.image,

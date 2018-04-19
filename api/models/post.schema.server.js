@@ -2,8 +2,9 @@ var mongoose = require('mongoose');
 
 var postSchema = mongoose.Schema({
 	userid: {type: mongoose.Schema.Types.ObjectId, ref: 'UserModel', required: true},
-	creatorname: {type: String},
-	createdat: {type: Date, default: new Date()},
+    creatorname: {type: String},
+    creatorprofilepic: {type: String},
+    createdat: {type: Date, default: new Date()},
 	image: {type: String},
 	text: {type: String},
     facebook: {

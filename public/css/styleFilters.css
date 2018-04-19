@@ -53,6 +53,8 @@ html {
 
 .container {
   display: flex;
+  padding-right: 0vw;
+  padding-left: 0vw;
   align-items: center;
   justify-content: center;
   height: 100vh;
@@ -202,7 +204,7 @@ html {
   font-size: 5vw;
   color: #FFF;
   display: block;
-  z-index:1;
+  z-index:3;
 }
 
 .avatar {
@@ -309,7 +311,7 @@ html {
   height:100%;
   width:0vw;
   position:fixed;
-  z-index:2;
+  z-index:4;
   top:0vw;
   left:0vw;
   background-color:#111;
@@ -326,6 +328,14 @@ html {
   color:#ccc;
   display:block;
   transition:0.3s;
+}
+
+a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
+  color:#fff;
+}
+
+a:not([href]):not([tabindex]){
+  color:#ccc;
 }
 
 .side-nav a:hover{

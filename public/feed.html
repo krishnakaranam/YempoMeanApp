@@ -60,11 +60,11 @@
       </div>
 	  
 	  <div class="sort">
-        <select id='sorts'>
-			<option value="volvo">Sort</option>
-			<option value="saab">likes</option>
-			<option value="mercedes">shares</option>
-			<option value="audi">re-tweets</option>
+        <select ng-model="selectsort" ng-change="selectSort()" id='sorts'>
+			<option value="sort" selected>Sort</option>
+			<option value="favorites">favorites</option>
+          <option value="retweets">re-tweets</option>
+          <option value="claps">claps</option>
 		</select>
       </div>
 	  
@@ -73,7 +73,7 @@
       </div>
 	  
 	  <div class="search">
-          <input type="text" placeholder="Search..">
+          <input ng-model="search" ng-change="searchPost()" type="text" placeholder="Search..">
       </div>
 	 
       <div class="post" id="writepost">
@@ -113,11 +113,6 @@
         </form>
       </div>
 
-
-
-
-
-
       <div class="feed" ng-repeat="post in currentFeed">
         <div class="avatar"><img src={{post.profilepic}}/></div>
         <div class="name">
@@ -133,7 +128,7 @@
           <span id='clapcirclelikenum'>{{post.claps}}</span>
         </div>
         <div class="clap">
-          <span id='clap'><i class="fa fa-hand-paper-o" ></i></span>
+          <span id='clap'><i class="fa fa-hand-paper-o" ng-click="clapPost(post._id, post.clapped)"></i></span>
         </div>
         <hr>
         <div ng-show="post.image" class="images"><img src={{post.image}} alt="image" /></div>
@@ -145,31 +140,14 @@
           <span id="expand"><i class="fa fa-expand" onclick="enlarge()"></i></span>
         </div>
         <hr class="img">
-        <div class="like">
-          <span id='like'><i class="fa fa-thumbs-up" onclick="facebookLike()"></i></span>
-        </div>
-        <div class="likenum">
-          <span id='likenum' >{{post.likes}}</span>
-        </div>
-        <div class="share">
-          <span id='share'><i class="fa fa-share" onclick="facebookShare()"></i></span>
-        </div>
-        <div class="sharenum">
-          <span id='sharenum'>{{post.shares}}</span>
-        </div>
-        <div class="open">
-          <span id='open'><i class="fa fa-facebook-square"></i></span>
-        </div>
-        <p class="end"></p>
-        <hr>
         <div class="twitlike">
-          <span id='twitlike'><i class="fa fa-heart" ng-click="favoritePostById(post._id)"></i></span>
+          <span id='twitlike'><i class="fa fa-heart" ng-click="favoritePost(post._id, post.favorited)"></i></span>
         </div>
         <div class="tweetlikenum">
           <span id='tweetlikenum'>{{post.favorites}}</span>
         </div>
         <div class="twitshare">
-          <span id='twitshare'><i class="fa fa-retweet" ng-click="retweetPostById(post._id)"></i></span>
+          <span id='twitshare'><i class="fa fa-retweet" ng-click="retweetPost(post._id, post.retweeted)"></i></span>
         </div>
         <div class="twitsharenum">
           <span id='twitsharenum'>{{post.retweets}}</span>
@@ -179,146 +157,6 @@
         </div>
         <p class="end"></p>
         <hr>
-      </div>
-
-
-
-
-
-
-
-
-
-
-
-
-    
-      <div class="feed">
-        <div class="avatar"><img src="http://www.fillmurray.com/50/50"/></div>
-        <div class="name">
-          <h5>Bruce Wayne</h5>
-        </div>
-        <div class="clapcircle">
-          <span id='clapcircle'><i class="fa fa-circle"></i></span>
-        </div>
-		<div class="clapcirclelike">
-          <span id='clapcirclelike'><i class="fa fa-circle"></i></span>
-        </div>
-		<div class="clapcirclelikenum">
-          <span id='clapcirclelikenum'>12</span>
-        </div>
-        <div class="clap">
-          <span id='clap'><i class="fa fa-hand-paper-o" onclick="clap()"></i></span>
-        </div>
-        <hr>
-        <div class="images"><img src="http://www.fillmurray.com/1920/1080" alt="image" /></div>
-        <hr class="img">
-        <div class="feedtext" id="feedtext1">
-          <p>Come join us lorem ipsum Come join us lorem ipsum Come join us lorem ipsum Come join us lorem ipsum Come join us lorem ipsum ...</p>
-        </div>
-        <div class="expand">
-          <span id="expand"><i class="fa fa-expand" onclick="enlarge()"></i></span>
-        </div>
-        <hr class="img">
-        <div class="like">
-          <span id='like'><i class="fa fa-thumbs-up" onclick="facebookLike()"></i></span>
-        </div>
-		<div class="likenum">
-          <span id='likenum' >15</span>
-        </div>
-        <div class="share">
-          <span id='share'><i class="fa fa-share" onclick="facebookShare()"></i></span>
-        </div>
-		<div class="sharenum">
-          <span id='sharenum'>8</span>
-        </div>
-        <div class="open">
-          <span id='open'><i class="fa fa-facebook-square"></i></span>
-        </div>
-		<p class="end"></p>
-        <hr>
-        <div class="twitlike">
-          <span id='twitlike'><i class="fa fa-heart" onclick="twitLike()"></i></span>
-        </div>
-		<div class="tweetlikenum">
-          <span id='tweetlikenum'>18</span>
-        </div>
-        <div class="twitshare">
-          <span id='twitshare'><i class="fa fa-retweet" onclick="twitShare()"></i></span>
-        </div>
-		<div class="twitsharenum">
-          <span id='twitsharenum'>7</span>
-        </div>
-        <div class="twitopen">
-          <span id='twitopen'><i class="fa fa-twitter-square"></i></span>
-        </div>
-        <p class="end"></p>
-		<hr>
-      </div>
-
-	
-      <div class="feed">
-        <div class="avatar"><img src="http://www.fillmurray.com/50/50"/></div>
-        <div class="name">
-          <h5>Alexander Jackson</h5>
-        </div>
-        <div class="clapcircle">
-          <span id='clapcircle'><i class="fa fa-circle"></i></span>
-        </div>
-		<div class="clapcirclelike">
-          <span id='clapcirclelike'><i class="fa fa-circle"></i></span>
-        </div>
-		<div class="clapcirclelikenum">
-          <span id='clapcirclelikenum2'>29</span>
-        </div>
-        <div class="clap">
-          <span id='clap'><i class="fa fa-hand-paper-o" onclick="clap2()"></i></span>
-        </div>
-        <hr>
-        <div class="images"><img src="http://www.fillmurray.com/1350/1350" alt="image"/></div>
-        <hr class="img">
-        <div class="feedtext">
-          <p>Come join us lorem ipsum...</p>
-        </div>
-        <div class="expand">
-          <span id="expand"><i class="fa fa-expand"></i></span>
-        </div>
-        <hr class="img">
-        <div class="like">
-          <span id='like'><i class="fa fa-thumbs-up" onclick="facebookLike2()"></i></span>
-        </div>
-		<div class="likenum">
-          <span id='likenum2'>5</span>
-        </div>
-        <div class="share">
-          <span id='share'><i class="fa fa-share" onclick="facebookShare2()"></i></span>
-        </div>
-		<div class="sharenum">
-          <span id='sharenum2'>2</span>
-        </div>
-        <div class="open">
-          <span id='open'><i class="fa fa-facebook-square"></i></span>
-        </div>
-        <p class="end"></p>
-        <hr>
-        
-        <div class="twitlike">
-          <span id='twitlike'><i class="fa fa-heart" onclick="twitLike2()"></i></span>
-        </div>
-		<div class="tweetlikenum">
-          <span id='tweetlikenum2'>15</span>
-        </div>
-        <div class="twitshare">
-          <span id='twitshare'><i class="fa fa-retweet" onclick="twitShare2()"></i></span>
-        </div>
-		<div class="twitsharenum">
-          <span id='twitsharenum2'>15</span>
-        </div>
-        <div class="twitopen">
-          <span id='twitopen'><i class="fa fa-twitter-square"></i></span>
-        </div>
-        <p class="end"> </p>
-		<hr>
       </div>
     
     </div>

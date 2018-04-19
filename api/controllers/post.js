@@ -14,24 +14,45 @@ exports.get_feed = (req, res, next) => {
         .sort({"datetime": -1}).limit(200)
         .exec()
         .then(posts => {
+
             const response = {
                 count: posts.length,
                 posts: posts.map(post => {
+                    var Clapped = true;
+                    var Liked = true;
+                    var Shared = true;
+                    var Favorited = true;
+                    var Retweeted = false;
+                    if (post.claps.indexOf((id.toString())) === -1){
+                        var Clapped = false;
+                    }if (post.facebook.likes.indexOf((id.toString())) === -1){
+                        var Liked = false;
+                    }if (post.facebook.shares.indexOf((id.toString())) === -1){
+                        var Shared = false;
+                    }if (post.twitter.favorites.indexOf((id.toString())) === -1){
+                        var Favorited = false;
+                    }
+                    for(var i = 0; i < post.twitter.retweets.length; i++) {
+                        if (post.twitter.retweets[i].userid == id.toString()) {
+                            Retweeted = true;
+                            break;
+                        }
+                    }
                     return {
                         profilepic: user[0].profilepic,
                         username: user[0].name,
                         claps: post.claps.length,
-                        clapped: post.claps.includes(id),
+                        clapped: Clapped,
                         image: post.image,
                         text: post.text,
                         likes: post.facebook.likes.length,
-                        liked: post.facebook.likes.includes(id),
+                        liked: Liked,
                         shares: post.facebook.shares.length,
-                        shared: post.facebook.shares.includes(id),
+                        shared: Shared,
                         favorites: post.twitter.favorites.length,
-                        favorited: post.twitter.favorites.includes(id),
+                        favorited: Favorited,
                         retweets: post.twitter.retweets.length,
-                        retweeted: post.twitter.retweets.includes(id),
+                        retweeted: Retweeted,
                         facebookurl: post.facebook.url,
                         twitterurl: post.twitter.url,
                         _id: post._id
@@ -332,7 +353,7 @@ exports.unretweet_post = (req, res, next) => {
                 .exec()
                 .then(post => {
 
-                    T.post('statuses/destroy/:id', { id: post[0].twitter.postid  }, function (err, data, response) {
+                    T.post('statuses/unretweet/:id', { id: post[0].twitter.postid  }, function (err, data, response) {
                         if (err){
                             res.status(500).json({
                                 error: err

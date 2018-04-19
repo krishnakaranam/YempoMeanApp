@@ -14,8 +14,8 @@ router.get("/gateway/:userId", checkAuth, FilterController.filter_gateway);
 
 router.get("/mostactive/:userId", checkAuth, FilterController.filter_most_active);
 
-router.get("/mostinteractive/:userId", checkAuth, FilterController.filter_most_interactive);
-
 router.get("/leastactive/:userId", checkAuth, FilterController.filter_least_active);
+
+router.get("/mostinteractive/:userId", checkAuth, FilterController.filter_most_interactive);
 
 module.exports = router;

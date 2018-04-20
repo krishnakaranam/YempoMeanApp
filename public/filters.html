@@ -70,7 +70,7 @@
 		  <div  id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 			  <div class="carousel-inner">
 
-				  <div ng-show="mostfollowers" md-swipe-left="onSwipeLeftMostFollowers($event, $target)" class="carousel-item active">
+				  <div ng-show="mostfollowers" md-swipe-right="onSwipeRightMostFollowers($event, $target)" md-swipe-left="onSwipeLeftMostFollowers($event, $target)" class="carousel-item active">
 					  <h2 class="text-center text-uppercase text-secondary mb-0">Most Followers</h2>
 					  <div class="container">
 						  <div class="row">
@@ -98,7 +98,7 @@
 					  </div>
 				  </div>
 
-				  <div ng-show="leastfollowers" md-swipe-left="onSwipeLeftLeastFollowers($event, $target)" class="carousel-item active">
+				  <div ng-show="leastfollowers" md-swipe-right="onSwipeRightLeastFollowers($event, $target)" md-swipe-left="onSwipeLeftLeastFollowers($event, $target)" class="carousel-item active">
 					  <h2 class="text-center text-uppercase text-secondary mb-0">Least Followers</h2>
 					  <div class="container">
 						  <div class="row">
@@ -126,7 +126,7 @@
 						  </div>
 				  </div>
 
-				  <div ng-show="gatewayfollowers" md-swipe-left="onSwipeLeftGatewayFollowers($event, $target)" class="carousel-item active">
+				  <div ng-show="gatewayfollowers" md-swipe-right="onSwipeRightGatewayFollowers($event, $target)" md-swipe-left="onSwipeLeftGatewayFollowers($event, $target)" class="carousel-item active">
 					  <h2 class="text-center text-uppercase text-secondary mb-0">Gateway to the Outside</h2>
 					  <div class="container">
 						  <div class="row">
@@ -154,7 +154,7 @@
 					  </div>
 				  </div>
 
-				  <div ng-show="mostactivefollowers" md-swipe-left="onSwipeLeftMostActiveFollowers($event, $target)" class="carousel-item active">
+				  <div ng-show="mostactivefollowers" md-swipe-right="onSwipeRightMostActiveFollowers($event, $target)" md-swipe-left="onSwipeLeftMostActiveFollowers($event, $target)" class="carousel-item active">
 					  <h2 class="text-center text-uppercase text-secondary mb-0">Most Active</h2>
 					  <div class="container">
 						  <div class="row">
@@ -183,7 +183,7 @@
 					  </div>
 				  </div>
 
-				  <div ng-show="leastactivefollowers" md-swipe-left="onSwipeLeftLeastActiveFollowers($event, $target)" class="carousel-item active">
+				  <div ng-show="leastactivefollowers" md-swipe-right="onSwipeRightLeastActiveFollowers($event, $target)" md-swipe-left="onSwipeLeftLeastActiveFollowers($event, $target)" class="carousel-item active">
 					  <h2 class="text-center text-uppercase text-secondary mb-0">Least Active</h2>
 					  <div class="container">
 						  <div class="row">
@@ -212,7 +212,7 @@
 					  </div>
 				  </div>
 
-				  <div ng-show="mostinteractivefollowers" md-swipe-left="onSwipeLeftMostInteractiveFollowers($event, $target)" class="carousel-item active">
+				  <div ng-show="mostinteractivefollowers" md-swipe-right="onSwipeRightMostInteractiveFollowers($event, $target)" md-swipe-left="onSwipeLeftMostInteractiveFollowers($event, $target)" class="carousel-item active">
 					  <h2 class="text-center text-uppercase text-secondary mb-0">Most Interactive</h2>
 					  <div class="container">
 						  <div class="row">
@@ -241,14 +241,14 @@
 					  </div>
 				  </div>
 
-				  <div ng-show="messagefollowers" md-swipe-left="onSwipeLeftMessageFollowers($event, $target)" class="carousel-item active">
+				  <div ng-show="messagefollowers" md-swipe-right="onSwipeRightMessageFollowers($event, $target)" md-swipe-left="onSwipeLeftMessageFollowers($event, $target)" class="carousel-item active">
 					  <h2 class="text-center text-uppercase text-secondary mb-0">Message Followers</h2>
 					  <div class="container">
 						  <div class="row">
 							  <div class="col-lg-8 mx-auto">
 								  <div class="row justify-content-center">
 									  <message-followers
-											  bridges="bridgesInYourArea"
+											  bridges="acquaintancesInYourArea"
 											  acquaintances="acquaintancesInYourArea"
 											  colors="colorsInYourArea" >
 									  </message-followers>

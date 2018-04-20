@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = "Yempo">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Filters</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Jquery core -->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+
+	<!-- D3 core -->
+	<script type="text/javascript" src="js/d3.min.js"></script>
+  
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=PT+Sans'>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styleFilters.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+
+	<!-- Angular Material style sheet -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+	<!-- Angular -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+
+	<!-- Angular Material requires Angular.js Libraries -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
+
+	<!-- Angular Material Library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
+
+	<!-- app js -->
+	<script src="./app.js"></script>
+
+	<!-- services -->
+	<!-- user -->
+	<script src="./services/user.service.client.js"></script>
+	<!-- post -->
+	<script src="./services/post.service.client.js"></script>
+	<!-- filter -->
+	<script src="./services/filter.service.client.js"></script>
+
+</head>
+
+<body>
+
+  <div class='container' ng-controller="FilterController">
+	  <div ng-show="openslide" id="side-menu" class="side-nav">
+		  <a class="btn-close" ng-click="closeSlideMenu()">&times;</a>
+		  <span></br></br></span>
+		  <a ng-click="openFeed()">Feed</a>
+		  <a ng-click="openFilters()">Filters</a>
+		  <a ng-click="openProfile()">Profile</a>
+		  <a ng-click="openReach()">Reach</a>
+		  <a href="#">Logout</a>
+	  </div>
+	  <div class='card'>
+		  <div class="add-btn"><a class="fa fa-arrow-right" ng-click="openSlideMenu()"></a></div>
+
+		  <br><br>
+
+		  <div class= "title">
+			  <h3>Message</h3>
+		  </div>
+
+		  <div  id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+			  <div class="carousel-inner">
+
+				  <div ng-show="messagefollowers" md-swipe-left="onSwipeLeftMessageFollowers($event, $target)" class="carousel-item active">
+					  <h2 class="text-center text-uppercase text-secondary mb-0">Message Followers</h2>
+					  <div class="container">
+						  <div class="row">
+							  <div class="col-lg-8 mx-auto">
+								  <div class="row justify-content-center">
+									  <message-followers
+											  bridges="bridgesInYourArea"
+											  acquaintances="acquaintancesInYourArea"
+											  colors="colorsInYourArea" >
+									  </message-followers>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					  <div class="row">
+						  <div class ="col-1"><p> </p></div>
+						  <div class="col-7">
+							  <p>Mention and tweet</p>
+						  </div>
+
+					  </div>
+				  </div>
+
+
+		  </div>
+	</div>
+
+    </div>
+  </div>
+  
+ <script src="js/indexFilters.js"></script>
+
+</body>
+
+</html>

@@ -8,11 +8,12 @@ function closeSlideMenu(){
       document.getElementById('main').style.marginLeft = '0';
 }
 
-function enlarge(){
-	  if(document.getElementById('feedtext1').style.height!='auto'){
-      document.getElementById('feedtext1').style.height='auto';
+function enlarge(id){
+	console.log(id);
+	  if(document.getElementById(id).style.height!='auto'){
+      document.getElementById(id).style.height='auto';
 	  } else {
-	  document.getElementById('feedtext1').style.height='12vw';
+	  document.getElementById(id).style.height='12vw';
 	  }
 }
 

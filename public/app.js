@@ -7,6 +7,210 @@
         .controller("ReachController",ReachController)
         .controller("FeedController",FeedController)
         .controller("FilterController",FilterController)
+        .directive('ghVisualization', function () {
+
+            return {
+                restrict: 'E',
+                terminal: true,
+                scope: {
+                    friendsinyourarea: '=',
+                    acquaintancesinyourarea: '=',
+                    bridgesinyourarea: '=',
+                    colorsinyourarea: '=',
+                    acquaintances: '=',
+                    bridges: '='
+                },
+                link: function (scope, element, attrs) {
+
+                    var acquaintances = scope.acquaintances;
+                    var bridges = scope.bridges;
+
+                    function toggleColor(color){
+                        var currentColor = color;
+                        return function(){
+                            var col = d3.select(this).style('fill').toString();
+                            var colStr = d3.rgb(col).toString();
+                            var magenta = d3.rgb("magenta").toString();
+
+                            if(colStr != magenta){
+                                currentColor = "magenta";
+                                var selectedData = d3.select(this).data();
+                                scope.acquaintancesinyourarea.push(selectedData[0]);
+                                scope.colorsinyourarea.push(color);
+                                return d3.select(this).style("fill", currentColor);
+                            } else {
+                                var selectedData = d3.select(this).data();
+                                var i = scope.acquaintancesinyourarea.indexOf(selectedData[0]);
+                                if(i != -1) {
+                                    scope.acquaintancesinyourarea.splice(i, 1);
+                                    scope.colorsinyourarea.splice(i, 1);
+                                }
+                                return d3.select(this).style("fill", color);
+                            }
+                        }
+                    };
+
+
+                    var friends = [];
+                    var angle = 360/ (friends.length + acquaintances.length);
+
+                    var canvas = d3.select(element[0])
+                        .append("svg")
+                        .attr("width", 360)
+                        .attr("height", 460);//change to dynamic
+
+                    var myCx = 360/2;
+                    var myCy = 460/2;
+                    var rValue = 20;
+
+                    var rValue1 = 75;
+                    var rValue2 = 150;
+
+                    var friendsLines = canvas.selectAll("lines")
+                        .data(friends)
+                        .enter()
+                        .append("line")
+                        .attr("x1", function (d, i) {
+                            return myCx + Math.cos(i * Math.PI * angle / 180) * rValue1;
+                        })
+                        .attr("y1", function (d, i) {
+                            return myCy + Math.sin(i * Math.PI * angle / 180) * rValue1;
+                        })
+                        .attr("x2", myCx)
+                        .attr("y2", myCy)
+                        .attr("stroke-width", 1)
+                        .attr("stroke", "black");
+
+                    var bridgeDashes = canvas.selectAll("lines")
+                        .data(bridges)
+                        .enter()
+                        .append("line")
+                        .attr("x1", function (d, i) {
+                            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                        })
+                        .attr("y1", function (d, i) {
+                            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                        })
+                        .attr("x2", myCx)
+                        .attr("y2", myCy)
+                        .style("stroke-dasharray", "5 5")
+                        .attr("stroke", "black");
+
+                    var bridgeToAcquaintancesDashes = canvas.selectAll("lines")
+                        .data(bridges)
+                        .enter()
+                        .append("line")
+                        .attr("x1", function (d, i) {
+                            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                        })
+                        .attr("y1", function (d, i) {
+                            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                        })
+                        .attr("x2", function (d, i) {
+                            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue2;
+                        })
+                        .attr("y2", function (d, i) {
+                            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
+                        })
+                        .style("stroke-dasharray", "5 5")
+                        .attr("stroke", "black");
+
+                    var circle = canvas.append("circle")
+                        .attr("cx", myCx)
+                        .attr("cy", myCy)
+                        .attr("r", rValue)
+                        .style("fill", "black");
+
+                    canvas.append("text")
+                        .text("you")
+                        .attr("x", myCx - 15)
+                        .attr("y", myCy)
+                        .style('fill', 'white');
+
+                    var friendsPetals = canvas.selectAll("circles")
+                        .data(friends)
+                        .enter()
+                        .append("circle")
+                        .attr("cx", function (d, i){
+                            return myCx + Math.cos(i * Math.PI * angle / 180) * rValue1;
+                        })
+                        .attr("cy", function (d, i) {
+                            return myCy + Math.sin(i * Math.PI * angle / 180) * rValue1;
+                        })
+                        .attr("r", rValue)
+                        .style("fill", "red");
+
+                    var friendsPetalsText = canvas.selectAll("circles")
+                        .data(friends)
+                        .enter()
+                        .append("text")
+                        .text(function(d) { return d; })
+                        .attr("x", function (d, i){
+                            return myCx + Math.cos(i * Math.PI * angle / 180) * rValue1;
+                        })
+                        .attr("y", function (d, i) {
+                            return myCy + Math.sin(i * Math.PI * angle / 180) * rValue1;
+                        })
+                        .style("fill", "black");
+
+                    var acquaintancesPetals = canvas.selectAll("circles")
+                        .data(acquaintances)
+                        .enter()
+                        .append("circle")
+                        .attr("cx", function (d, i) {
+                            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue2;
+
+                        })
+                        .attr("cy", function (d, i) {
+                            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
+                        })
+                        .attr("r", rValue)
+                        .style("fill", "red")
+                        .on('click', toggleColor("red"));
+
+                    var acquaintancesPetalsText = canvas.selectAll("circles")
+                        .data(acquaintances)
+                        .enter()
+                        .append("text")
+                        .text(function(d) { return d; })
+                        .attr("x", function (d, i){
+                            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue2;
+                        })
+                        .attr("y", function (d, i) {
+                            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
+                        })
+                        .style("fill", "black");
+
+
+                    var bridgesPetals = canvas.selectAll("circles")
+                        .data(bridges)
+                        .enter()
+                        .append("circle")
+                        .attr("cx", function (d, i) {
+                            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+
+                        })
+                        .attr("cy", function (d, i) {
+                            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                        })
+                        .attr("r", rValue)
+                        .style("fill", "gray");
+
+                    var bridgesPetalsText = canvas.selectAll("circles")
+                        .data(bridges)
+                        .enter()
+                        .append("text")
+                        .text(function(d) { return d; })
+                        .attr("x", function (d, i){
+                            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                        })
+                        .attr("y", function (d, i) {
+                            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                        })
+                        .style("fill", "black");
+                }
+            }
+        })
         .config(AppConfig);
 
     function LoginController($scope,userService,$location, $anchorScroll) {
@@ -71,9 +275,7 @@
                         }
                     })
             }
-
         }
-
     }
 
     function ProfileController($location, userService, $routeParams, $anchorScroll, $route, $scope) {
@@ -204,6 +406,7 @@
         $scope.closeSlideMenu = closeSlideMenu;
         $scope.openWritePost = openWritePost;
         $scope.closeWritePost = closeWritePost;
+        $scope.enlarge = enlarge;
         $scope.searchPost = searchPost;
         $scope.selectSort = selectSort;
 
@@ -224,7 +427,7 @@
                         var feedList = feed.posts;
                         var filteredFeed = [];
                         for(var i = 0; i < feedList.length; i++) {
-                            if (feedList[i].text.includes($scope.search)) {
+                            if (feedList[i].text.includes($scope.search) || feedList[i].creatorname.includes($scope.search)) {
                                 filteredFeed.push(feedList[i]);
                             }
                         }
@@ -291,6 +494,14 @@
             $location.url('/user/' + $scope.userId + '/' + $scope.token);
         }
 
+        function enlarge(id){
+            if(document.getElementById(id).style.height!='auto'){
+                document.getElementById(id).style.height='auto';
+            } else {
+                document.getElementById(id).style.height='12vw';
+            }
+        }
+
         function openFilters(){
             $location.url('/filter/' + $scope.userId + '/' + $scope.token);
         }
@@ -305,6 +516,7 @@
                     if (postResponse) {
                         $scope.error = postResponse.message;
                         newpost.text = "";
+                        closeWritePost();
                     }
                     else {
                         $scope.error = " Oops! Something went wrong. Please try again later ";
@@ -455,10 +667,14 @@
         $scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
 
-        var friendsInYourArea = [];
-        var acquaintancesInYourArea = [];
-        var bridgesInYourArea = [];
-        var colorsInYourArea = [];
+        // to be used to send messages to selected acquaintances
+        $scope.acquaintancesInYourArea = [];
+        $scope.colorsInYourArea = [];
+
+        // to be set from the data coming from the server.
+        // both for each of mostfollowers etc
+        $scope.acquaintances = [10,20,30,40,60, 80, 20, 50];
+        $scope.bridges = [10,20,30,40,60, 80, 20, 50];
 
         $scope.displayMostFollowers = displayMostFollowers;
         $scope.displayLeastFollowers = displayLeastFollowers;
@@ -472,6 +688,13 @@
         $scope.openProfile = openProfile;
         $scope.openSlideMenu = openSlideMenu;
         $scope.closeSlideMenu = closeSlideMenu;
+        $scope.clicked = clicked;
+
+        $scope.onSwipeLeftMostFollowers = function(ev, target) {
+            alert('You swiped left!!');
+            $scope.mostfollowers = undefined;
+            $scope.gateway = 1;
+        };
 
         function init() {
             filterService.getMostFollowers($scope.userId,$scope.token)
@@ -492,6 +715,12 @@
 
         function displayMostFollowers(followerArrray) {
             $scope.mostFollowers = followerArrray;
+        }
+
+        function clicked() {
+            console.log($scope.acquaintances);
+            console.log($scope.acquaintancesInYourArea);
+            console.log($scope.colorsInYourArea);
         }
 
         function displayLeastFollowers(followerArrray) {
@@ -542,166 +771,6 @@
         }
         // Most Followers Code :
 
-        var acquaintances = ["one","two","three"];
-        var bridges = ["one","two","three"];
-        var friends = [];
-
-        var angle = 360/ (friends.length + acquaintances.length);
-
-        var canvas = d3.select("#mostFollowers")
-            .append("svg")
-            .attr("width", 360)
-            .attr("height", 460);//change to dynamic
-
-        var myCx = 360/2;
-        var myCy = 460/2;
-        var rValue = 20;
-
-        var rValue1 = 75;
-        var rValue2 = 150;
-
-        var friendsLines = canvas.selectAll("lines")
-            .data(friends)
-            .enter()
-            .append("line")
-            .attr("x1", function (d, i) {
-                return myCx + Math.cos(i * Math.PI * angle / 180) * rValue1;
-            })
-            .attr("y1", function (d, i) {
-                return myCy + Math.sin(i * Math.PI * angle / 180) * rValue1;
-            })
-            .attr("x2", myCx)
-            .attr("y2", myCy)
-            .attr("stroke-width", 1)
-            .attr("stroke", "black");
-
-        var bridgeDashes = canvas.selectAll("lines")
-            .data(bridges)
-            .enter()
-            .append("line")
-            .attr("x1", function (d, i) {
-                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-            })
-            .attr("y1", function (d, i) {
-                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-            })
-            .attr("x2", myCx)
-            .attr("y2", myCy)
-            .style("stroke-dasharray", "5 5")
-            .attr("stroke", "black");
-
-        var bridgeToAcquaintancesDashes = canvas.selectAll("lines")
-            .data(bridges)
-            .enter()
-            .append("line")
-            .attr("x1", function (d, i) {
-                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-            })
-            .attr("y1", function (d, i) {
-                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-            })
-            .attr("x2", function (d, i) {
-                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue2;
-            })
-            .attr("y2", function (d, i) {
-                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
-            })
-            .style("stroke-dasharray", "5 5")
-            .attr("stroke", "black");
-
-        var circle = canvas.append("circle")
-            .attr("cx", myCx)
-            .attr("cy", myCy)
-            .attr("r", rValue)
-            .style("fill", "black");
-
-        canvas.append("text")
-            .text("you")
-            .attr("x", myCx - 15)
-            .attr("y", myCy)
-            .style('fill', 'white');
-
-        var friendsPetals = canvas.selectAll("circles")
-            .data(friends)
-            .enter()
-            .append("circle")
-            .attr("cx", function (d, i){
-                return myCx + Math.cos(i * Math.PI * angle / 180) * rValue1;
-            })
-            .attr("cy", function (d, i) {
-                return myCy + Math.sin(i * Math.PI * angle / 180) * rValue1;
-            })
-            .attr("r", rValue)
-            .style("fill", "red");
-
-        var friendsPetalsText = canvas.selectAll("circles")
-            .data(friends)
-            .enter()
-            .append("text")
-            .text(function(d) { return d; })
-            .attr("x", function (d, i){
-                return myCx + Math.cos(i * Math.PI * angle / 180) * rValue1;
-            })
-            .attr("y", function (d, i) {
-                return myCy + Math.sin(i * Math.PI * angle / 180) * rValue1;
-            })
-            .style("fill", "black");
-
-        var acquaintancesPetals = canvas.selectAll("circles")
-            .data(acquaintances)
-            .enter()
-            .append("circle")
-            .attr("cx", function (d, i) {
-                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue2;
-
-            })
-            .attr("cy", function (d, i) {
-                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
-            })
-            .attr("r", rValue)
-            .style("fill", "red")
-            .on('click', toggleColor("red"));
-
-        var acquaintancesPetalsText = canvas.selectAll("circles")
-            .data(acquaintances)
-            .enter()
-            .append("text")
-            .text(function(d) { return d; })
-            .attr("x", function (d, i){
-                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue2;
-            })
-            .attr("y", function (d, i) {
-                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
-            })
-            .style("fill", "black");
-
-
-        var bridgesPetals = canvas.selectAll("circles")
-            .data(bridges)
-            .enter()
-            .append("circle")
-            .attr("cx", function (d, i) {
-                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-
-            })
-            .attr("cy", function (d, i) {
-                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-            })
-            .attr("r", rValue)
-            .style("fill", "gray");
-
-        var bridgesPetalsText = canvas.selectAll("circles")
-            .data(bridges)
-            .enter()
-            .append("text")
-            .text(function(d) { return d; })
-            .attr("x", function (d, i){
-                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-            })
-            .attr("y", function (d, i) {
-                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-            })
-            .style("fill", "black");
 
         // Most Followers Code End
 

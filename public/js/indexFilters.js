@@ -186,7 +186,6 @@ $.ajax({
 		}});
 });
 
-
 function toggleColor(color){
         var currentColor = color;
         return function(){

@@ -94,6 +94,7 @@ exports.create_post = (req, res, next) => {
                             _id: new mongoose.Types.ObjectId(),
                             userid: req.params.userId,
                             creatorname: data.user.name,
+                            creatorprofilepic: user[0].profilepic,
                             text: data.text,
                             twitter : {
                             	url : "https://twitter.com/"+data.user.screen_name+"/status/"+data.id_str,

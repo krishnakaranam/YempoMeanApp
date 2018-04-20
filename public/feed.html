@@ -133,11 +133,11 @@
         <hr>
         <div ng-show="post.image" class="images"><img src={{post.image}} alt="image" /></div>
         <hr class="img">
-        <div class="feedtext" id="feedtext1">
+        <div class="feedtext" ng-attr-id="{{ post.twitterurl }}">
           <p>{{post.text}}</p>
         </div>
         <div class="expand">
-          <span id="expand"><i class="fa fa-expand" onclick="enlarge()"></i></span>
+          <span id="expand"><i class="fa fa-expand" ng-click="enlarge(post.twitterurl)"></i></span>
         </div>
         <hr class="img">
         <div class="twitlike">

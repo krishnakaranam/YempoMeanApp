@@ -427,7 +427,7 @@
                         var feedList = feed.posts;
                         var filteredFeed = [];
                         for(var i = 0; i < feedList.length; i++) {
-                            if (feedList[i].text.includes($scope.search) || feedList[i].creatorname.includes($scope.search)) {
+                            if (feedList[i].text.includes($scope.search)) {
                                 filteredFeed.push(feedList[i]);
                             }
                         }

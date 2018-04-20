@@ -61,36 +61,14 @@
 	  <div class='card'>
 		  <div class="add-btn"><a class="fa fa-arrow-right" ng-click="openSlideMenu()"></a></div>
 
+		  <br><br>
+
 		  <div class= "title">
-			  <h3>Reach</h3>
+			  <h3>Filters</h3>
 		  </div>
 
 		  <div  id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 			  <div class="carousel-inner">
-
-				  <div class="carousel-item">
-					  <div class="container">
-						  <h2 class="text-center text-uppercase text-secondary mb-0">Gateway to Outside Network</h2>
-						  <div class="row">
-							  <div class="col-lg-8 mx-auto">
-								  <div class="row justify-content-center">
-									  <div id = "gatewayToOutside"> </div>
-								  </div>
-							  </div>
-						  </div>
-
-						  <div class="row">
-							  <div class ="col-1"><p> </p></div>
-							  <div class="col-4">
-								  <button class="button" onclick="clicked()">+</button>
-							  </div>
-							  <div class="col-7">
-								  <p>Select a petal to add a person to your dandelion</p>
-							  </div>
-
-						  </div>
-					  </div>
-				  </div>
 
 				  <div ng-show="mostfollowers" md-swipe-left="onSwipeLeftMostFollowers($event, $target)" class="carousel-item active">
 					  <h2 class="text-center text-uppercase text-secondary mb-0">Most Followers</h2>
@@ -98,12 +76,40 @@
 						  <div class="row">
 							  <div class="col-lg-8 mx-auto">
 								  <div class="row justify-content-center">
-									  <gh-visualization  friendsinyourarea="friendsInYourArea"
-														 acquaintancesinyourarea="acquaintancesInYourArea"
-														 bridges="bridges"
-														 acquaintances="acquaintances"
+									  <most-followers acquaintancesinyourarea="acquaintancesInYourArea"
+													  bridges="bridgesMostFollowers"
+													  acquaintances="acquaintancesMostFollowers"
+													  bridgesinyourarea="bridgesInYourArea"
+													  colorsinyourarea="colorsInYourArea" >
+									  </most-followers>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					  <div class="row">
+						  <div class ="col-1"><p> </p></div>
+						  <div class="col-4">
+							  <button class="button" ng-click="clicked()">+</button>
+						  </div>
+						  <div class="col-7">
+							  <p>Select a petal to add a person to your dandelion</p>
+						  </div>
+
+					  </div>
+				  </div>
+
+				  <div ng-show="leastfollowers" md-swipe-left="onSwipeLeftLeastFollowers($event, $target)" class="carousel-item active">
+					  <h2 class="text-center text-uppercase text-secondary mb-0">Least Followers</h2>
+					  <div class="container">
+						  <div class="row">
+							  <div class="col-lg-8 mx-auto">
+								  <div class="row justify-content-center">
+									  <least-followers  acquaintancesinyourarea="acquaintancesInYourArea"
+														 bridges="bridgesLeastFollowers"
+														 acquaintances="acquaintancesLeastFollowers"
 														 bridgesinyourarea="bridgesInYourArea"
-														 colorsinyourarea="colorsInYourArea" ></gh-visualization>
+														 colorsinyourarea="colorsInYourArea" >
+									  </least-followers>
 								  </div>
 							  </div>
 						  </div>
@@ -120,10 +126,147 @@
 						  </div>
 				  </div>
 
+				  <div ng-show="gatewayfollowers" md-swipe-left="onSwipeLeftGatewayFollowers($event, $target)" class="carousel-item active">
+					  <h2 class="text-center text-uppercase text-secondary mb-0">Gateway to the Outside</h2>
+					  <div class="container">
+						  <div class="row">
+							  <div class="col-lg-8 mx-auto">
+								  <div class="row justify-content-center">
+									  <gateway-followers  acquaintancesinyourarea="acquaintancesInYourArea"
+														 bridges="bridgesGatewayFollowers"
+														 acquaintances="acquaintancesGatewayFollowers"
+														 bridgesinyourarea="bridgesInYourArea"
+														 colorsinyourarea="colorsInYourArea" >
+									  </gateway-followers>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					  <div class="row">
+						  <div class ="col-1"><p> </p></div>
+						  <div class="col-4">
+							  <button class="button" ng-click="clicked()">+</button>
+						  </div>
+						  <div class="col-7">
+							  <p>Select a petal to add a person to your dandelion</p>
+						  </div>
+
+					  </div>
+				  </div>
+
+				  <div ng-show="mostactivefollowers" md-swipe-left="onSwipeLeftMostActiveFollowers($event, $target)" class="carousel-item active">
+					  <h2 class="text-center text-uppercase text-secondary mb-0">Most Active</h2>
+					  <div class="container">
+						  <div class="row">
+							  <div class="col-lg-8 mx-auto">
+								  <div class="row justify-content-center">
+									  <mostactive-followers  friendsinyourarea="friendsInYourArea"
+														 acquaintancesinyourarea="acquaintancesInYourArea"
+														 bridges="bridgesMostactiveFollowers"
+														 acquaintances="acquaintancesMostactiveFollowers"
+														 bridgesinyourarea="bridgesInYourArea"
+														 colorsinyourarea="colorsInYourArea" >
+									  </mostactive-followers>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					  <div class="row">
+						  <div class ="col-1"><p> </p></div>
+						  <div class="col-4">
+							  <button class="button" ng-click="clicked()">+</button>
+						  </div>
+						  <div class="col-7">
+							  <p>Select a petal to add a person to your dandelion</p>
+						  </div>
+
+					  </div>
+				  </div>
+
+				  <div ng-show="leastactivefollowers" md-swipe-left="onSwipeLeftLeastActiveFollowers($event, $target)" class="carousel-item active">
+					  <h2 class="text-center text-uppercase text-secondary mb-0">Least Active</h2>
+					  <div class="container">
+						  <div class="row">
+							  <div class="col-lg-8 mx-auto">
+								  <div class="row justify-content-center">
+									  <leastactive-followers  friendsinyourarea="friendsInYourArea"
+														 acquaintancesinyourarea="acquaintancesInYourArea"
+														 bridges="bridgesLeastactiveFollowers"
+														 acquaintances="acquaintancesLeastactiveFollowers"
+														 bridgesinyourarea="bridgesInYourArea"
+														 colorsinyourarea="colorsInYourArea" >
+									  </leastactive-followers>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					  <div class="row">
+						  <div class ="col-1"><p> </p></div>
+						  <div class="col-4">
+							  <button class="button" ng-click="clicked()">+</button>
+						  </div>
+						  <div class="col-7">
+							  <p>Select a petal to add a person to your dandelion</p>
+						  </div>
+
+					  </div>
+				  </div>
+
+				  <div ng-show="mostinteractivefollowers" md-swipe-left="onSwipeLeftMostInteractiveFollowers($event, $target)" class="carousel-item active">
+					  <h2 class="text-center text-uppercase text-secondary mb-0">Most Interactive</h2>
+					  <div class="container">
+						  <div class="row">
+							  <div class="col-lg-8 mx-auto">
+								  <div class="row justify-content-center">
+									  <mostinteractive-followers  friendsinyourarea="friendsInYourArea"
+															  acquaintancesinyourarea="acquaintancesInYourArea"
+															  bridges="bridgesMostInteractiveFollowers"
+															  acquaintances="acquaintancesMostInteractiveFollowers"
+															  bridgesinyourarea="bridgesInYourArea"
+															  colorsinyourarea="colorsInYourArea" >
+									  </mostinteractive-followers>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					  <div class="row">
+						  <div class ="col-1"><p> </p></div>
+						  <div class="col-4">
+							  <button class="button" ng-click="clicked()">+</button>
+						  </div>
+						  <div class="col-7">
+							  <p>Select a petal to add a person to your dandelion</p>
+						  </div>
+
+					  </div>
+				  </div>
+
+				  <div ng-show="messagefollowers" md-swipe-left="onSwipeLeftMessageFollowers($event, $target)" class="carousel-item active">
+					  <h2 class="text-center text-uppercase text-secondary mb-0">Message Followers</h2>
+					  <div class="container">
+						  <div class="row">
+							  <div class="col-lg-8 mx-auto">
+								  <div class="row justify-content-center">
+									  <message-followers
+											  bridges="bridgesInYourArea"
+											  acquaintances="acquaintancesInYourArea"
+											  colors="colorsInYourArea" >
+									  </message-followers>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					  <div class="row">
+						  <div class ="col-1"><p> </p></div>
+						  <div class="col-7">
+							  <p>Mention and tweet</p>
+						  </div>
+
+					  </div>
+				  </div>
 
 
 		  </div>
-
 	</div>
 
     </div>

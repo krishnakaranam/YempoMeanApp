@@ -2,22 +2,21 @@
 <html lang="en" ng-app = "Yempo">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Filters</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<title>Filters</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Jquery core -->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 
 	<!-- D3 core -->
 	<script type="text/javascript" src="js/d3.min.js"></script>
-  
-  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=PT+Sans'>
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/styleFilters.css">
-  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
+	<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=PT+Sans'>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/styleFilters.css">
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
 	<!-- Angular Material style sheet -->
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
@@ -49,230 +48,199 @@
 
 <body>
 
-  <div class='container' ng-controller="FilterController">
-	  <div ng-show="openslide" id="side-menu" class="side-nav">
-		  <a class="btn-close" ng-click="closeSlideMenu()">&times;</a>
-		  <span></br></br></span>
-		  <a ng-click="openFeed()">Feed</a>
-		  <a ng-click="openProfile()">Profile</a>
-		  <a ng-click="openReach()">Reach</a>
-		  <a href="#">Logout</a>
-	  </div>
-	  <div class='card'>
-		  <div class="add-btn"><a class="fa fa-arrow-right" ng-click="openSlideMenu()"></a></div>
+<div class='container' ng-controller="FilterController">
+	<div ng-show="openslide" id="side-menu" class="side-nav">
+		<a class="btn-close" ng-click="closeSlideMenu()">&times;</a>
+		<span></br></br></span>
+		<a ng-click="openFeed()">Feed</a>
+		<a ng-click="openProfile()">Profile</a>
+		<a ng-click="openReach()">Reach</a>
+		<a href="#">Logout</a>
+	</div>
+	<div class='card'>
+		<div class="add-btn"><a class="fa fa-arrow-right" ng-click="openSlideMenu()"></a></div>
 
-		  <br><br>
+		<div  id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner">
 
-		  <div class= "title">
-			  <h3>Filters</h3>
-		  </div>
+				<div ng-show="mostfollowers" md-swipe-right="onSwipeRightMostFollowers($event, $target)" md-swipe-left="onSwipeLeftMostFollowers($event, $target)" class="carousel-item active">
+					<h2 class="text-center text-uppercase text-secondary mb-0 h2-class">Most Followers</h2>
+					<div class="row svg-class">
+							<div class="col-lg-8 mx-auto">
+								<div class="row justify-content-center">
+									<most-followers acquaintancesinyourarea="acquaintancesInYourArea"
+													bridges="bridgesMostFollowers"
+													acquaintances="acquaintancesMostFollowers"
+													bridgesinyourarea="bridgesInYourArea"
+													colorsinyourarea="colorsInYourArea" >
+									</most-followers>
+								</div>
+							</div>
+						</div>
+					<div class="row svg-class">
+						<div class="col-7 button-move">
+							<p>Select a petal to add a person to your dandelion</p>
+						</div>
+						<div class="col-2 button-mv">
+							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						</div>
+					</div>
+				</div>
 
-		  <div  id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-			  <div class="carousel-inner">
-
-				  <div ng-show="mostfollowers" md-swipe-right="onSwipeRightMostFollowers($event, $target)" md-swipe-left="onSwipeLeftMostFollowers($event, $target)" class="carousel-item active">
-					  <h2 class="text-center text-uppercase text-secondary mb-0">Most Followers</h2>
-					  <div class="container">
-						  <div class="row">
-							  <div class="col-lg-8 mx-auto">
-								  <div class="row justify-content-center">
-									  <most-followers acquaintancesinyourarea="acquaintancesInYourArea"
-													  bridges="bridgesMostFollowers"
-													  acquaintances="acquaintancesMostFollowers"
+				<div ng-show="leastfollowers" md-swipe-right="onSwipeRightLeastFollowers($event, $target)" md-swipe-left="onSwipeLeftLeastFollowers($event, $target)" class="carousel-item active">
+					<h2 class="text-center text-uppercase text-secondary mb-0 h2-class">Least Followers</h2>
+					<div class="row svg-class">
+							<div class="col-lg-8 mx-auto">
+								<div class="row justify-content-center">
+									<least-followers  acquaintancesinyourarea="acquaintancesInYourArea"
+													  bridges="bridgesLeastFollowers"
+													  acquaintances="acquaintancesLeastFollowers"
 													  bridgesinyourarea="bridgesInYourArea"
 													  colorsinyourarea="colorsInYourArea" >
-									  </most-followers>
-								  </div>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="row">
-						  <div class ="col-1"><p> </p></div>
-						  <div class="col-4">
-							  <button class="button" ng-click="clicked()">+</button>
-						  </div>
-						  <div class="col-7">
-							  <p>Select a petal to add a person to your dandelion</p>
-						  </div>
+									</least-followers>
+								</div>
+							</div>
+						</div>
+					<div class="row svg-class">
+						<div class="col-7 button-move">
+							<p>Select a petal to add a person to your dandelion</p>
+						</div>
+						<div class="col-2 button-mv">
+							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						</div>
+					</div>
+				</div>
 
-					  </div>
-				  </div>
+				<div ng-show="gatewayfollowers" md-swipe-right="onSwipeRightGatewayFollowers($event, $target)" md-swipe-left="onSwipeLeftGatewayFollowers($event, $target)" class="carousel-item active">
+					<h2 class="text-center text-uppercase text-secondary mb-0 h2-class">Gateway to the outside</h2>
+					<div class="row svg-class">
+							<div class="col-lg-8 mx-auto">
+								<div class="row justify-content-center">
+									<gateway-followers  acquaintancesinyourarea="acquaintancesInYourArea"
+														bridges="bridgesGatewayFollowers"
+														acquaintances="acquaintancesGatewayFollowers"
+														bridgesinyourarea="bridgesInYourArea"
+														colorsinyourarea="colorsInYourArea" >
+									</gateway-followers>
+								</div>
+							</div>
+					</div>
+					<div class="row svg-class">
+						<div class="col-7 button-move">
+							<p>Select a petal to add a person to your dandelion</p>
+						</div>
+						<div class="col-2 button-mv">
+							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						</div>
+					</div>
+				</div>
 
-				  <div ng-show="leastfollowers" md-swipe-right="onSwipeRightLeastFollowers($event, $target)" md-swipe-left="onSwipeLeftLeastFollowers($event, $target)" class="carousel-item active">
-					  <h2 class="text-center text-uppercase text-secondary mb-0">Least Followers</h2>
-					  <div class="container">
-						  <div class="row">
-							  <div class="col-lg-8 mx-auto">
-								  <div class="row justify-content-center">
-									  <least-followers  acquaintancesinyourarea="acquaintancesInYourArea"
-														 bridges="bridgesLeastFollowers"
-														 acquaintances="acquaintancesLeastFollowers"
-														 bridgesinyourarea="bridgesInYourArea"
-														 colorsinyourarea="colorsInYourArea" >
-									  </least-followers>
-								  </div>
-							  </div>
-						  </div>
-					  </div>
-						  <div class="row">
-							  <div class ="col-1"><p> </p></div>
-							  <div class="col-4">
-								  <button class="button" ng-click="clicked()">+</button>
-							  </div>
-							  <div class="col-7">
-								  <p>Select a petal to add a person to your dandelion</p>
-							  </div>
+				<div ng-show="mostactivefollowers" md-swipe-right="onSwipeRightMostActiveFollowers($event, $target)" md-swipe-left="onSwipeLeftMostActiveFollowers($event, $target)" class="carousel-item active">
+					<h2 class="text-center text-uppercase text-secondary mb-0 h2-class">Most Active</h2>
+					<div class="row svg-class">
+							<div class="col-lg-8 mx-auto">
+								<div class="row justify-content-center">
+									<mostactive-followers  friendsinyourarea="friendsInYourArea"
+														   acquaintancesinyourarea="acquaintancesInYourArea"
+														   bridges="bridgesMostactiveFollowers"
+														   acquaintances="acquaintancesMostactiveFollowers"
+														   bridgesinyourarea="bridgesInYourArea"
+														   colorsinyourarea="colorsInYourArea" >
+									</mostactive-followers>
+								</div>
+							</div>
+					</div>
+					<div class="row svg-class">
+						<div class="col-7 button-move">
+							<p>Select a petal to add a person to your dandelion</p>
+						</div>
+						<div class="col-2 button-mv">
+							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						</div>
+					</div>
+				</div>
 
-						  </div>
-				  </div>
+				<div ng-show="leastactivefollowers" md-swipe-right="onSwipeRightLeastActiveFollowers($event, $target)" md-swipe-left="onSwipeLeftLeastActiveFollowers($event, $target)" class="carousel-item active">
+					<h2 class="text-center text-uppercase text-secondary mb-0 h2-class">Least Active</h2>
+					<div class="row svg-class">
+							<div class="col-lg-8 mx-auto">
+								<div class="row justify-content-center">
+									<leastactive-followers  friendsinyourarea="friendsInYourArea"
+															acquaintancesinyourarea="acquaintancesInYourArea"
+															bridges="bridgesLeastactiveFollowers"
+															acquaintances="acquaintancesLeastactiveFollowers"
+															bridgesinyourarea="bridgesInYourArea"
+															colorsinyourarea="colorsInYourArea" >
+									</leastactive-followers>
+								</div>
+							</div>
+					</div>
+					<div class="row svg-class">
+						<div class="col-7 button-move">
+							<p>Select a petal to add a person to your dandelion</p>
+						</div>
+						<div class="col-2 button-mv">
+							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						</div>
+					</div>
+				</div>
 
-				  <div ng-show="gatewayfollowers" md-swipe-right="onSwipeRightGatewayFollowers($event, $target)" md-swipe-left="onSwipeLeftGatewayFollowers($event, $target)" class="carousel-item active">
-					  <h2 class="text-center text-uppercase text-secondary mb-0">Gateway to the Outside</h2>
-					  <div class="container">
-						  <div class="row">
-							  <div class="col-lg-8 mx-auto">
-								  <div class="row justify-content-center">
-									  <gateway-followers  acquaintancesinyourarea="acquaintancesInYourArea"
-														 bridges="bridgesGatewayFollowers"
-														 acquaintances="acquaintancesGatewayFollowers"
-														 bridgesinyourarea="bridgesInYourArea"
-														 colorsinyourarea="colorsInYourArea" >
-									  </gateway-followers>
-								  </div>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="row">
-						  <div class ="col-1"><p> </p></div>
-						  <div class="col-4">
-							  <button class="button" ng-click="clicked()">+</button>
-						  </div>
-						  <div class="col-7">
-							  <p>Select a petal to add a person to your dandelion</p>
-						  </div>
+				<div ng-show="mostinteractivefollowers" md-swipe-right="onSwipeRightMostInteractiveFollowers($event, $target)" md-swipe-left="onSwipeLeftMostInteractiveFollowers($event, $target)" class="carousel-item active">
+					<h2 class="text-center text-uppercase text-secondary mb-0 h2-class">Most Interactive</h2>
+					<div class="row svg-class">
+							<div class="col-lg-8 mx-auto">
+								<div class="row justify-content-center">
+									<mostinteractive-followers  friendsinyourarea="friendsInYourArea"
+																acquaintancesinyourarea="acquaintancesInYourArea"
+																bridges="bridgesMostInteractiveFollowers"
+																acquaintances="acquaintancesMostInteractiveFollowers"
+																bridgesinyourarea="bridgesInYourArea"
+																colorsinyourarea="colorsInYourArea" >
+									</mostinteractive-followers>
+								</div>
+							</div>
+					</div>
+					<div class="row svg-class">
+						<div class="col-7 button-move">
+							<p>Select a petal to add a person to your dandelion</p>
+						</div>
+						<div class="col-2 button-mv">
+							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						</div>
+					</div>
+				</div>
 
-					  </div>
-				  </div>
-
-				  <div ng-show="mostactivefollowers" md-swipe-right="onSwipeRightMostActiveFollowers($event, $target)" md-swipe-left="onSwipeLeftMostActiveFollowers($event, $target)" class="carousel-item active">
-					  <h2 class="text-center text-uppercase text-secondary mb-0">Most Active</h2>
-					  <div class="container">
-						  <div class="row">
-							  <div class="col-lg-8 mx-auto">
-								  <div class="row justify-content-center">
-									  <mostactive-followers  friendsinyourarea="friendsInYourArea"
-														 acquaintancesinyourarea="acquaintancesInYourArea"
-														 bridges="bridgesMostactiveFollowers"
-														 acquaintances="acquaintancesMostactiveFollowers"
-														 bridgesinyourarea="bridgesInYourArea"
-														 colorsinyourarea="colorsInYourArea" >
-									  </mostactive-followers>
-								  </div>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="row">
-						  <div class ="col-1"><p> </p></div>
-						  <div class="col-4">
-							  <button class="button" ng-click="clicked()">+</button>
-						  </div>
-						  <div class="col-7">
-							  <p>Select a petal to add a person to your dandelion</p>
-						  </div>
-
-					  </div>
-				  </div>
-
-				  <div ng-show="leastactivefollowers" md-swipe-right="onSwipeRightLeastActiveFollowers($event, $target)" md-swipe-left="onSwipeLeftLeastActiveFollowers($event, $target)" class="carousel-item active">
-					  <h2 class="text-center text-uppercase text-secondary mb-0">Least Active</h2>
-					  <div class="container">
-						  <div class="row">
-							  <div class="col-lg-8 mx-auto">
-								  <div class="row justify-content-center">
-									  <leastactive-followers  friendsinyourarea="friendsInYourArea"
-														 acquaintancesinyourarea="acquaintancesInYourArea"
-														 bridges="bridgesLeastactiveFollowers"
-														 acquaintances="acquaintancesLeastactiveFollowers"
-														 bridgesinyourarea="bridgesInYourArea"
-														 colorsinyourarea="colorsInYourArea" >
-									  </leastactive-followers>
-								  </div>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="row">
-						  <div class ="col-1"><p> </p></div>
-						  <div class="col-4">
-							  <button class="button" ng-click="clicked()">+</button>
-						  </div>
-						  <div class="col-7">
-							  <p>Select a petal to add a person to your dandelion</p>
-						  </div>
-
-					  </div>
-				  </div>
-
-				  <div ng-show="mostinteractivefollowers" md-swipe-right="onSwipeRightMostInteractiveFollowers($event, $target)" md-swipe-left="onSwipeLeftMostInteractiveFollowers($event, $target)" class="carousel-item active">
-					  <h2 class="text-center text-uppercase text-secondary mb-0">Most Interactive</h2>
-					  <div class="container">
-						  <div class="row">
-							  <div class="col-lg-8 mx-auto">
-								  <div class="row justify-content-center">
-									  <mostinteractive-followers  friendsinyourarea="friendsInYourArea"
-															  acquaintancesinyourarea="acquaintancesInYourArea"
-															  bridges="bridgesMostInteractiveFollowers"
-															  acquaintances="acquaintancesMostInteractiveFollowers"
-															  bridgesinyourarea="bridgesInYourArea"
-															  colorsinyourarea="colorsInYourArea" >
-									  </mostinteractive-followers>
-								  </div>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="row">
-						  <div class ="col-1"><p> </p></div>
-						  <div class="col-4">
-							  <button class="button" ng-click="clicked()">+</button>
-						  </div>
-						  <div class="col-7">
-							  <p>Select a petal to add a person to your dandelion</p>
-						  </div>
-
-					  </div>
-				  </div>
-
-				  <div ng-show="messagefollowers" md-swipe-right="onSwipeRightMessageFollowers($event, $target)" md-swipe-left="onSwipeLeftMessageFollowers($event, $target)" class="carousel-item active">
-					  <h2 class="text-center text-uppercase text-secondary mb-0">Message Followers</h2>
-					  <div class="container">
-						  <div class="row">
-							  <div class="col-lg-8 mx-auto">
-								  <div class="row justify-content-center">
-									  <message-followers
-											  bridges="acquaintancesInYourArea"
-											  acquaintances="acquaintancesInYourArea"
-											  colors="colorsInYourArea" >
-									  </message-followers>
-								  </div>
-							  </div>
-						  </div>
-					  </div>
-					  <div class="row">
-						  <div class ="col-1"><p> </p></div>
-						  <div class="col-7">
-							  <p>Mention and tweet</p>
-						  </div>
-
-					  </div>
-				  </div>
+				<div ng-show="messagefollowers" md-swipe-right="onSwipeRightMessageFollowers($event, $target)" md-swipe-left="onSwipeLeftMessageFollowers($event, $target)" class="carousel-item active">
+					<h2 class="text-center text-uppercase text-secondary mb-0 h2-class">Message Followers</h2>
+					<div class="row svg-class">
+							<div class="col-lg-8 mx-auto">
+								<div class="row justify-content-center">
+									<message-followers
+											bridges="acquaintancesInYourArea"
+											acquaintances="acquaintancesInYourArea"
+											colors="colorsInYourArea" >
+									</message-followers>
+								</div>
+							</div>
+					</div>
+					<div class="row svg-class">
+						<div class="col-7 button-move">
+							<p>Select a petal to add a person to your dandelion</p>
+						</div>
+						<div class="col-2 button-mv">
+							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						</div>
+					</div>
+				</div>
 
 
-		  </div>
+			</div>
+		</div>
+
 	</div>
+</div>
 
-    </div>
-  </div>
-  
- <script src="js/indexFilters.js"></script>
+<script src="js/indexFilters.js"></script>
 
 </body>
 

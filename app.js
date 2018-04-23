@@ -55,7 +55,7 @@ app.use(require('express-session')({    secret: "catdogcat",
                                         maxAge: 360*5,
                                         saveUninitialized: true,
                                         cookie: {
-                                            secure: true
+                                            secure: false
                                         }
 }));
 

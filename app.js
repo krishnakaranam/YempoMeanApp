@@ -13,7 +13,7 @@ app.use(passport.session());
 passport.use(new Strategy({
         consumerKey: process.env.CONSUMER_KEY,
         consumerSecret: process.env.CONSUMER_SECRET,
-        callbackURL: 'https://www.karanam-saikrishna-webdev.herokuapp.com/login/twitter/return',
+        callbackURL: 'https://karanam-saikrishna-webdev.herokuapp.com/login/twitter/return',
         passReqToCallback : true
     },
     function (req, token, tokenSecret, profile, cb) {
@@ -55,7 +55,7 @@ app.use(require('express-session')({    secret: "catdogcat",
                                         maxAge: 360*5,
                                         saveUninitialized: true,
                                         cookie: {
-                                            secure: false
+                                            secure: true
                                         }
 }));
 

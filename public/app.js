@@ -1582,6 +1582,7 @@
     function ProfileController($location, userService, $routeParams, $anchorScroll, $route, $scope) {
         $scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
+        $scope.twitterLogin = '/login/twitter/'+$scope.userId;
         $scope.displayUser = displayUser;
         $scope.profileError = profileError;
         $scope.openReach = openReach;

@@ -4,6 +4,37 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+//passport
+const passport = require('passport');
+const Strategy = require('passport-twitter').Strategy;
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new Strategy({
+        consumerKey: process.env.CONSUMER_KEY,
+        consumerSecret: process.env.CONSUMER_SECRET,
+        callbackURL: 'https://karanam-saikrishna-webdev.herokuapp.com/login/twitter/return'
+    },
+    function (req,token, tokenSecret, profile, cb) {
+        console.log("profile is ", profile);
+        console.log("request is ", req);
+        console.log("token is ", token);
+        console.log("the token secret is ", tokenSecret);
+
+        return cb(null, profile);
+    }));
+
+passport.serializeUser(function(user, cb) {
+    cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+    cb(null, obj);
+});
+
+
+// passport done
+
 const filterRoutes = require("./api/routes/filter.route");
 const postRoutes = require("./api/routes/post.route");
 const userRoutes = require('./api/routes/user.route');
@@ -20,6 +51,7 @@ app.use(morgan("dev"));
 //app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(require('express-session')({ secret: process.env.JWT_KEY, resave: true, saveUninitialized: true }));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -33,6 +65,25 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+app.get('/login/twitter',
+    passport.authenticate('twitter'));
+
+app.get('/login/twitter/return',
+    passport.authenticate('twitter', { failureRedirect: '/login' }),
+    function(req, res) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+        );
+        if (req.method === "OPTIONS") {
+            res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+            return res.status(200).json({});
+        }
+        console.log("request is " + req);
+        res.redirect('/');
+    });
 
 // Routes which should handle requests
 app.use("/api/filter", filterRoutes);

@@ -32,7 +32,7 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
-router.get("/feed/:userId", PostController.get_feed);
+router.get("/feed/:userId", checkAuth, PostController.get_feed);
 
 router.post("/create/:userId", checkAuth, PostController.create_post);
 

@@ -1,6 +1,6 @@
 (function (app) {
     angular
-        .module("Yempo", ['ngRoute', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+        .module("Yempo", ['ngRoute', 'ngMaterial', 'ngMessages'])
         .controller("LoginController",LoginController)
         .controller("ProfileController",ProfileController)
         .controller("RegisterController",RegisterController)
@@ -1589,6 +1589,7 @@
         $scope.openFilters = openFilters;
         $scope.openSlideMenu = openSlideMenu;
         $scope.closeSlideMenu = closeSlideMenu;
+        $scope.connectTwitter = connectTwitter;
 
         function init() {
             userService.findUserById($scope.userId,$scope.token)
@@ -1599,6 +1600,10 @@
 
         function displayUser(user) {
             $scope.currentUser = user;
+        }
+
+        function connectTwitter() {
+            userService.connectTwitter($scope.userId);
         }
 
         function profileError() {

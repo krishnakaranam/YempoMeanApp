@@ -4,8 +4,6 @@ const checkAuth = require('../middleware/check-auth');
 
 const FilterController = require('../controllers/filter');
 
-router.post("/message/:userId", checkAuth, FilterController.filter_message); // yet to finish
-
 router.get("/mostfollowers/:userId", checkAuth, FilterController.filter_most_followers);
 
 router.get("/leastfollowers/:userId", checkAuth, FilterController.filter_least_followers);

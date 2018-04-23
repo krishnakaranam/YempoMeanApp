@@ -82,8 +82,7 @@ exports.create_post = (req, res, next) => {
                     access_token:         user[0].twitter.token,
                     access_token_secret:  user[0].twitter.tokensecret
                 });
-                console.log(req.body);
-                T.post('statuses/update', { status: req.body.text }, function (err, data, response) {
+                T.post('statuses/update', { status: req.body.text.substr(0, 280) }, function (err, data, response) {
                     if (err){
                         res.status(500).json({
                             error: err
@@ -95,7 +94,7 @@ exports.create_post = (req, res, next) => {
                             userid: req.params.userId,
                             creatorname: data.user.name,
                             creatorprofilepic: user[0].profilepic,
-                            text: data.text,
+                            text: req.body.text,
                             twitter : {
                             	url : "https://twitter.com/"+data.user.screen_name+"/status/"+data.id_str,
 								postid : data.id_str }

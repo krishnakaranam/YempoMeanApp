@@ -2,34 +2,6 @@ const mongoose = require("mongoose");
 var Twit = require('twit');
 const User = require("../models/user.schema.server");
 
-exports.filter_message = (req, res, next) => {
-  Order.find()
-    .select("product quantity _id")
-    .populate("product", "name")
-    .exec()
-    .then(docs => {
-      res.status(200).json({
-        count: docs.length,
-        orders: docs.map(doc => {
-          return {
-            _id: doc._id,
-            product: doc.product,
-            quantity: doc.quantity,
-            request: {
-              type: "GET",
-              url: "http://localhost:3000/orders/" + doc._id
-            }
-          };
-        })
-      });
-    })
-    .catch(err => {
-      res.status(500).json({
-        error: err
-      });
-    });
-};
-
 exports.filter_most_followers = (req, res, next) => {
   const id = req.params.userId;
   User.findById(id)
@@ -40,10 +12,9 @@ exports.filter_most_followers = (req, res, next) => {
         });
       } else {
 		res.status(200).json({
-        message: "most followers",
-        mostfollowers: {
-          list: user.twitter.mutualconnections.sort(sortit).slice(0, 5)
-        }
+            message: "most followers",
+            screennames: user.twitter.mutualconnections.sort(sortit).slice(0, 5).map(a => a.screen_name),
+            followerlength : user.twitter.mutualconnections.sort(sortit).slice(0, 5).map(a => a.followers_count)
       });
 	  }
     })
@@ -66,11 +37,10 @@ exports.filter_least_followers = (req, res, next) => {
         });
       } else {
 		res.status(200).json({
-        message: "least followers",
-        leastfollowers: {
-          list: user.twitter.mutualconnections.sort(sortit).slice(user.twitter.mutualconnections.length-5, user.twitter.mutualconnections.length)
-        }
-      });
+            message: "least followers",
+            screennames: user.twitter.mutualconnections.sort(sortit).slice(user.twitter.mutualconnections.length-5, user.twitter.mutualconnections.length).map(a => a.screen_name),
+            followerlength: user.twitter.mutualconnections.sort(sortit).slice(user.twitter.mutualconnections.length-5, user.twitter.mutualconnections.length).map(a => a.followers_count)
+        });
 	  }
     })
     .catch(err => {
@@ -91,10 +61,9 @@ exports.filter_gateway = (req, res, next) => {
         });
       } else {
 		res.status(200).json({
-        message: "gateway",
-        gateway: {
-          list: user.twitter.gateway.sort(sortit).slice(0, 5)
-        }
+            message: "gateway",
+            screennames: user.twitter.gateway.sort(sortit).slice(0, 5).map(a => a.screen_name),
+            followerlength: user.twitter.gateway.sort(sortit).slice(0, 5).map(a => a.len)
       });
 	  }
     })
@@ -116,10 +85,9 @@ exports.filter_most_active = (req, res, next) => {
         });
       } else {
 		res.status(200).json({
-        message: "most active",
-        gateway: {
-          list: user.twitter.followers.sort(sortactive).slice(0, 5)
-        }
+            message: "most active",
+            screennames: user.twitter.followers.sort(sortactive).slice(0, 5).map(a => a.screen_name),
+            followerlength: user.twitter.followers.sort(sortactive).slice(0, 5).map(a => a.statuses_count)
       });
 	  }
     })
@@ -141,10 +109,9 @@ exports.filter_least_active = (req, res, next) => {
         });
       } else {
 		res.status(200).json({
-        message: "least active",
-        gateway: {
-          list: user.twitter.followers.sort(sortactive).slice(user.twitter.followers.length-5, user.twitter.followers.length)
-        }
+            message: "least active",
+            screennames: user.twitter.followers.sort(sortactive).slice(user.twitter.followers.length-5, user.twitter.followers.length).map(a => a.screen_name),
+            followerlength: user.twitter.followers.sort(sortactive).slice(user.twitter.followers.length-5, user.twitter.followers.length).map(a => a.statuses_count)
       });
 	  }
     })
@@ -166,10 +133,9 @@ exports.filter_most_interactive = (req, res, next) => {
         });
       } else {
 		res.status(200).json({
-        message: "most interactive",
-        gateway: {
-          list: user.twitter.followers.sort(sortinteractive).slice(0, 5)
-        }
+            message: "most interactive",
+            screennames: user.twitter.followers.sort(sortinteractive).slice(0, 5).map(a => a.screen_name),
+            followerlength: user.twitter.followers.sort(sortinteractive).slice(0, 5).map(a => a.favourites_count)
       });
 	  }
     })

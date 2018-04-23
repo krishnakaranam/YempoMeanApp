@@ -10,7 +10,8 @@
             createUser: createUser,
             findUserById: findUserById,
             findUserByUsername: findUserByUsername,
-            findUserByCredentials: findUserByCredentials
+            findUserByCredentials: findUserByCredentials,
+            connectTwitter: connectTwitter
         };
         return api;
 
@@ -22,6 +23,13 @@
                     return response.data;
                 }, function (error) {
                     return error.data;
+                });
+        }
+
+        function connectTwitter(userId) {
+            var url = 'login/twitter';
+            return $http.get(url).then(function (response) {
+                    return response.data;
                 });
         }
 

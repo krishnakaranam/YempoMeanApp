@@ -13,25 +13,25 @@ app.use(passport.session());
 passport.use(new Strategy({
         consumerKey: process.env.CONSUMER_KEY,
         consumerSecret: process.env.CONSUMER_SECRET,
-        callbackURL: 'https://karanam-saikrishna-webdev.herokuapp.com/login/twitter/return'
+        callbackURL: 'https://www.karanam-saikrishna-webdev.herokuapp.com/login/twitter/return',
+        passReqToCallback : true
     },
-    function (req,token, tokenSecret, profile, cb) {
-        console.log("profile is ", profile);
-        console.log("request is ", req);
-        console.log("token is ", token);
-        console.log("the token secret is ", tokenSecret);
-
+    function (req, token, tokenSecret, profile, cb) {
+        //console.log("req is ", req);
+        //console.log("token is ", token);
+        //console.log("the token secret is ", tokenSecret);
         return cb(null, profile);
     }));
 
 passport.serializeUser(function(user, cb) {
+    //console.log("serialize user",user);
     cb(null, user);
 });
 
 passport.deserializeUser(function(obj, cb) {
+    //console.log("deserialize obj",obj);
     cb(null, obj);
 });
-
 
 // passport done
 
@@ -48,10 +48,16 @@ mongoose.connect(
 mongoose.Promise = global.Promise;
 
 app.use(morgan("dev"));
-//app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(require('express-session')({ secret: process.env.JWT_KEY, resave: true, saveUninitialized: true }));
+app.use(require('express-session')({    secret: "catdogcat",
+                                        resave: true,
+                                        maxAge: 360*5,
+                                        saveUninitialized: true,
+                                        cookie: {
+                                            secure: false
+                                        }
+}));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -66,22 +72,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/login/twitter',
-    passport.authenticate('twitter'));
+app.get('/login/twitter/:userId',passport.authenticate('twitter'));
 
 app.get('/login/twitter/return',
     passport.authenticate('twitter', { failureRedirect: '/login' }),
     function(req, res) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header(
-            "Access-Control-Allow-Headers",
-            "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-        );
-        if (req.method === "OPTIONS") {
-            res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-            return res.status(200).json({});
-        }
-        console.log("request is " + req);
+        //console.log("request is " , req);
         res.redirect('/');
     });
 

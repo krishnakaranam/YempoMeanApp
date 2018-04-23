@@ -155,8 +155,10 @@ html {
   color: #cccccc;
 }
 
-
-
+.btn a{
+  text-decoration: none;
+  color :  #FFFFFF;
+}
 
 .side-nav{
   height:100%;

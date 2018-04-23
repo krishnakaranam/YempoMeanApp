@@ -28,9 +28,7 @@
 
         function connectTwitter(userId) {
             var url = 'login/twitter';
-            return $http.get(url).then(function (response) {
-                    return response.data;
-                });
+            return $http.get(url);
         }
 
         // done

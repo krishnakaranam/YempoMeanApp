@@ -218,17 +218,21 @@
 									<message-followers
 											bridges="acquaintancesInYourArea"
 											acquaintances="acquaintancesInYourArea"
-											colors="colorsInYourArea" >
+											colors="colorsInYourArea"
+											sendmessage="sendmessage">
 									</message-followers>
 								</div>
 							</div>
 					</div>
 					<div class="row svg-class">
 						<div class="col-7 button-move">
-							<p>Select a petal to add a person to your dandelion</p>
+							{{sendmessage}}
+							<textarea ng-model="sendnewmessage" id="textpost" maxlength="280" ng-keypress="clicked()"></textarea>
+							<p class="text-right">{{ 280 - sendmessage.length - sendnewmessage.length + ' Char left' }}</p>
 						</div>
 						<div class="col-2 button-mv">
-							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+							<br>
+							<button class="w3-button w3-teal" ng-click="sendMessage()">Tweet</button>
 						</div>
 					</div>
 				</div>

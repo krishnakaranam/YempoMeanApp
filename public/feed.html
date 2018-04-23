@@ -75,7 +75,9 @@
 	  <div class="search">
           <input ng-model="search" ng-change="searchPost()" type="text" placeholder="Search..">
       </div>
-	 
+
+      <div class="inset toastdemoBasicUsage"> </div>
+
       <div class="post" id="writepost">
         <div class="avatar"><img src={{currentUser.profilepic}}/></div>
         <div class="name">
@@ -86,7 +88,7 @@
         <hr class = "aftername">
         <form ng-submit="createPost(newpost)">
         <div class="write">
-          <textarea ng-model="newpost.text" id="textpost" class="write-post" placeholder="  Write post here ..." ng-click="openWritePost()"></textarea>
+          <textarea ng-model="newpost.text" maxlength="280" id="textpost" class="write-post" placeholder="  Write post here ..." ng-click="openWritePost()"></textarea>
         </div>
         <div class="attach">
           <span id='attachment'><i class="fa fa-paperclip"></i></span>

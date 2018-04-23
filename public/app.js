@@ -1,6 +1,6 @@
 (function (app) {
     angular
-        .module("Yempo", ['ngRoute', 'ngMaterial'])
+        .module("Yempo", ['ngRoute', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
         .controller("LoginController",LoginController)
         .controller("ProfileController",ProfileController)
         .controller("RegisterController",RegisterController)
@@ -1328,12 +1328,14 @@
                 scope: {
                     colors: '=',
                     acquaintances: '=',
-                    bridges: '='
+                    bridges: '=',
+                    sendmessage: '='
                 },
                 link: function (scope, element, attrs) {
 
                     scope.$watch(function() {
                             drawDandelion(scope.acquaintances, [], scope.colors);
+                            //scope.sendmessage = "@"+scope.acquaintances.join(" @")+" ";
                     }, true);
 
                     function drawDandelion(acquaintances, bridges, colors) {
@@ -1686,9 +1688,48 @@
 
     }
 
-    function FeedController($location, userService, postService, $routeParams, $anchorScroll, $route, $scope) {
+    function FeedController($location, userService, postService, $routeParams, $anchorScroll, $route, $scope, $mdToast) {
         $scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
+
+        var last = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        };
+
+        $scope.toastPosition = angular.extend({},last);
+
+        $scope.getToastPosition = function() {
+            sanitizePosition();
+
+            return Object.keys($scope.toastPosition)
+                .filter(function(pos) { return $scope.toastPosition[pos]; })
+                .join(' ');
+        };
+
+        function sanitizePosition() {
+            var current = $scope.toastPosition;
+
+            if ( current.bottom && last.top ) current.top = false;
+            if ( current.top && last.bottom ) current.bottom = false;
+            if ( current.right && last.left ) current.left = false;
+            if ( current.left && last.right ) current.right = false;
+
+            last = angular.extend({},current);
+        }
+
+        $scope.showSimpleToast = showSimpleToast;
+
+        function showSimpleToast() {
+            $mdToast.show(
+                $mdToast.simple()
+                    .content($scope.error)
+                    .position($scope.getToastPosition())
+                    .hideDelay(1000)
+            );
+        };
         $scope.displayFeed = displayFeed;
         $scope.feedError = feedError;
         $scope.displayUser = displayUser;
@@ -1726,7 +1767,8 @@
                         var feedList = feed.posts;
                         var filteredFeed = [];
                         for(var i = 0; i < feedList.length; i++) {
-                            if (feedList[i].text.includes($scope.search) || feedList[i].creatorname.includes($scope.search)) {
+                            if (feedList[i].text.toLowerCase().includes($scope.search.toLowerCase())
+                                || feedList[i].username.toLowerCase().includes($scope.search.toLowerCase())) {
                                 filteredFeed.push(feedList[i]);
                             }
                         }
@@ -1735,6 +1777,11 @@
                         }else{
                             init();
                         }
+                    });
+            }else {
+                postService.getFeed($scope.userId,$scope.token)
+                    .then(feed => {
+                        $scope.currentFeed = feed.posts;
                     });
             }
         }
@@ -1814,14 +1861,16 @@
                 .then(function (postResponse) {
                     if (postResponse) {
                         $scope.error = postResponse.message;
+                        showSimpleToast();
                         newpost.text = "";
                         closeWritePost();
                     }
                     else {
                         $scope.error = " Oops! Something went wrong. Please try again later ";
+                        showSimpleToast();
                     }
                     init();
-                })
+                });
         }
 
         function getFeed() {
@@ -1834,6 +1883,7 @@
                     }
                     else {
                         $scope.error = " Oops! Something went wrong. Please try again later ";
+                        showSimpleToast();
                     }
                     init();
                 })
@@ -1847,9 +1897,11 @@
                     .then(function (resp) {
                         if (resp) {
                             $scope.error = resp.message;
+                            showSimpleToast();
                         }
                         else {
                             $scope.error = " Oops! Something went wrong. Please try again later ";
+                            showSimpleToast();
                         }
                         init();
                     })
@@ -1858,9 +1910,11 @@
                     .then(function (resp) {
                         if (resp) {
                             $scope.error = resp.message;
+                            showSimpleToast();
                         }
                         else {
                             $scope.error = " Oops! Something went wrong. Please try again later ";
+                            showSimpleToast();
                         }
                         init();
                     })
@@ -1962,7 +2016,7 @@
 
     }
 
-    function FilterController($location, userService, filterService, $routeParams, $anchorScroll, $route, $scope) {
+    function FilterController($location, userService, postService, filterService, $routeParams, $anchorScroll, $route, $scope) {
         $scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
 
@@ -1970,7 +2024,9 @@
         $scope.acquaintancesInYourArea = [];
         $scope.colorsInYourArea = [];
 
-
+        $scope.sendmessage = "";
+        $scope.sendnewmessage = "";
+        $scope.messagelength = 280;
 
         // display most followers
         $scope.mostfollowers = 1;
@@ -2160,10 +2216,28 @@
         init();
 
         function clicked() {
+            var tags = "@"+$scope.acquaintancesInYourArea.join(" @")+" ";
+            $scope.sendmessage = tags;
         }
 
-        // to be set from the data coming from the server.
-        // both for each of mostfollowers etc
+        $scope.sendMessage = function() {
+            var post = {
+                text : $scope.sendmessage + $scope.sendnewmessage
+            }
+            postService.createPost(post, $scope.userId, $scope.token)
+                .then(function (postResponse) {
+                    if (postResponse) {
+                        $scope.error = postResponse.message;
+                        console.log($scope.error);
+                        $scope.sendnewmessage = "";
+                    }
+                    else {
+                        $scope.error = " Oops! Something went wrong. Please try again later ";
+                        console.log($scope.error);
+                    }
+                    init();
+                });
+        }
 
         function displayMostFollowers(followerArrray) {
             $scope.acquaintancesMostFollowers = followerArrray.screennames;

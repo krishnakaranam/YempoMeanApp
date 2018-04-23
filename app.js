@@ -72,7 +72,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/login/twitter/:userId',passport.authenticate('twitter'));
+app.get('/login/twitter',passport.authenticate('twitter'));
 
 app.get('/login/twitter/return',
     passport.authenticate('twitter', { failureRedirect: '/login' }),

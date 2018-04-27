@@ -13,8 +13,8 @@ exports.filter_most_followers = (req, res, next) => {
       } else {
 		res.status(200).json({
             message: "most followers",
-            screennames: user.twitter.mutualconnections.sort(sortit).slice(0, 5).map(a => a.screen_name),
-            followerlength : user.twitter.mutualconnections.sort(sortit).slice(0, 5).map(a => a.followers_count)
+            screennames: user.twitter.mutualconnections.slice(1).sort(sortit).slice(0, 5).map(a => a.screen_name),
+            followerlength : user.twitter.mutualconnections.slice(1).sort(sortit).slice(0, 5).map(a => a.followers_count)
       });
 	  }
     })
@@ -38,8 +38,8 @@ exports.filter_least_followers = (req, res, next) => {
       } else {
 		res.status(200).json({
             message: "least followers",
-            screennames: user.twitter.mutualconnections.sort(sortit).slice(user.twitter.mutualconnections.length-5, user.twitter.mutualconnections.length).map(a => a.screen_name),
-            followerlength: user.twitter.mutualconnections.sort(sortit).slice(user.twitter.mutualconnections.length-5, user.twitter.mutualconnections.length).map(a => a.followers_count)
+            screennames: user.twitter.mutualconnections.slice(1).sort(sortit).slice(user.twitter.mutualconnections.length-6, user.twitter.mutualconnections.length).map(a => a.screen_name),
+            followerlength: user.twitter.mutualconnections.slice(1).sort(sortit).slice(user.twitter.mutualconnections.length-6, user.twitter.mutualconnections.length).map(a => a.followers_count)
         });
 	  }
     })

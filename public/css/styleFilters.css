@@ -57,18 +57,33 @@ html {
   padding-left: 0vw;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 100%;
   max-width: 100vw;
 }
 
 .card{
   background: #f9f9f9;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 .svg-class{
   padding-bottom: 8vh;
   margin-bottom: -5vh;
+}
+
+.postbtn{
+  margin-bottom: 2vw;
+  font-size: 4vw;
+  margin-left: -4.5vw;
+}
+.filterbtn{
+  font-size: 4vw;
+  margin-left: -3vw;
+ }
+
+.text-right{
+  font-size: 4vw;
+  margin-left: 9vw;
 }
 
 .button-move {
@@ -366,6 +381,24 @@ a:not([href]):not([tabindex]){
   top: -5vw;
   margin-left: 35vw;
   font-size:10vw;
+}
+
+.circle {
+  position: absolute;
+  font-size: 10vw;
+  color: #3c16a5;
+  margin-left: 10vw;
+  margin-top: -8vw;
+  font-family: 'PT Sans', sans-serif;
+}
+
+.circlenum {
+  position: absolute;
+  font-size: 5vw;
+  margin-left: 12.75vw;
+  margin-top: -5vw;
+  color: #ffffff;
+  font-family: 'PT Sans', sans-serif;
 }
 
 .w3-circle{border-radius:50%}

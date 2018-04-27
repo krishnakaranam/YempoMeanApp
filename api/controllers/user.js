@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user.schema.server");
+const populateFilters = require("../helpers/filterdata");
 
 exports.user_signup = (req, res, next) => {
   User.find({ username: req.body.email })
@@ -24,7 +25,9 @@ exports.user_signup = (req, res, next) => {
 				const user = new User({
 				_id: new mongoose.Types.ObjectId(),
 				username: req.body.email,
-				password: hash
+				password: hash,
+                name : req.body.name,
+                twitter : { screenname : req.body.screenname }
 				});
 				user
 				.save()
@@ -117,4 +120,47 @@ exports.user_profile = (req, res, next) => {
       console.log(err);
       res.status(500).json({ error: err });
     });
+};
+
+exports.user_connect_twitter = (profile, token, tokenSecret) => {
+    User.find({ "twitter.screenname" : profile.username })
+        .exec()
+        .then(user => {
+            populateFilters.getTheFollowers(profile.username,[],
+                {
+                    consumer_key:         process.env.CONSUMER_KEY ,
+                    consumer_secret:      process.env.CONSUMER_SECRET ,
+                    access_token:         token,
+                    access_token_secret:  tokenSecret
+                }).then( data =>{
+                    user[0].twitter.followers = data;
+                    populateFilters.gatewayToOutsideArray(data,
+                        {
+                            consumer_key:         process.env.CONSUMER_KEY ,
+                            consumer_secret:      process.env.CONSUMER_SECRET ,
+                            access_token:         token,
+                            access_token_secret:  tokenSecret
+                        }).then( gateway =>{
+                            console.log("gateway data :", gateway);
+                            if (user.length === 1) {
+                                User.update({    "username" : user[0].username
+                                    },
+                                    {'$set': { "twitter" : {
+                                                token : token,
+                                                tokensecret : tokenSecret,
+                                                screenname : user[0].twitter.screenname,
+                                                followers : user[0].twitter.followers,
+                                                mutualconnections : user[0].twitter.mutualconnections,
+                                                gateway : gateway
+                                            },
+                                            "profilepic" : profile._json.profile_image_url_https
+                                        },
+
+                                    }).exec();
+                            } else {
+                                console.log("user not found");
+                            }
+                        });
+                });
+        });
 };

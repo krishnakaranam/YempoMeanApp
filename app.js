@@ -4,6 +4,9 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+// for connecting twitter
+const UserController = require('./api/controllers/user');
+
 //passport
 const passport = require('passport');
 const Strategy = require('passport-twitter').Strategy;
@@ -13,13 +16,15 @@ app.use(passport.session());
 passport.use(new Strategy({
         consumerKey: process.env.CONSUMER_KEY,
         consumerSecret: process.env.CONSUMER_SECRET,
-        callbackURL: 'https://karanam-saikrishna-webdev.herokuapp.com/login/twitter/return',
+        callbackURL: 'http://127.0.0.1:3300/login/twitter/return',
         passReqToCallback : true
     },
     function (req, token, tokenSecret, profile, cb) {
         //console.log("req is ", req);
         //console.log("token is ", token);
         //console.log("the token secret is ", tokenSecret);
+        //console.log("the profile secret is ", profile);
+        UserController.user_connect_twitter(profile,token,tokenSecret);
         return cb(null, profile);
     }));
 
@@ -77,7 +82,7 @@ app.get('/login/twitter',passport.authenticate('twitter'));
 app.get('/login/twitter/return',
     passport.authenticate('twitter', { failureRedirect: '/login' }),
     function(req, res) {
-        //console.log("request is " , req);
+        //console.log("return request is " , req);
         res.redirect('/');
     });
 

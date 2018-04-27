@@ -61,10 +61,10 @@
 	  
 	  <div class="sort">
         <select ng-model="selectsort" ng-change="selectSort()" id='sorts'>
-			<option value="sort" selected>Sort</option>
-			<option value="favorites">favorites</option>
-          <option value="retweets">re-tweets</option>
-          <option value="claps">claps</option>
+          <option value="sort">--Sort by--</option>
+			<option value="favorites"># likes</option>
+          <option value="retweets"># retweets</option>
+          <option value="claps"># claps</option>
 		</select>
       </div>
 	  
@@ -79,7 +79,7 @@
       <div class="inset toastdemoBasicUsage"> </div>
 
       <div class="post" id="writepost">
-        <div class="avatar"><img src={{currentUser.profilepic}}/></div>
+        <div class="avatar"><img src={{currentUser.profilepic}} ></div>
         <div class="name">
           <h5>{{currentUser.name}}</h5>
         </div>
@@ -98,10 +98,10 @@
           <h6>share post to:</h6>
         </div>
 		    <div class="fb" id="fbicon">
-          <a class="fa fa-facebook-square" href="#"></a>
+          <a class="fa fa-facebook-square"></a>
         </div>
         <div class="twit" id="twiticon">
-          <a class="fa fa-twitter-square" href="#"></a>
+          <a class="fa fa-twitter-square"></a>
         </div>
         <div class="facebookcheck" id="facecheck">
         Facebook: <input type="checkbox" id="facebookcheck" disabled>
@@ -116,7 +116,7 @@
       </div>
 
       <div class="feed" ng-repeat="post in currentFeed">
-        <div class="avatar"><img src={{post.profilepic}}/></div>
+        <div class="avatar"><img src={{post.profilepic}} ></div>
         <div class="name">
           <h5>{{post.username}}</h5>
         </div>
@@ -133,7 +133,7 @@
           <span id='clap'><i class="fa fa-hand-paper-o" ng-click="clapPost(post._id, post.clapped)"></i></span>
         </div>
         <hr>
-        <div ng-show="post.image" class="images"><img src={{post.image}} alt="image" /></div>
+        <div ng-show="post.image" class="images"><img src={{post.image}} alt="image" ></div>
         <hr class="img">
         <div class="feedtext" ng-attr-id="{{ post.twitterurl }}">
           <p>{{post.text}}</p>

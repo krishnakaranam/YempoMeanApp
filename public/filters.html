@@ -5,44 +5,11 @@
 	<meta charset="UTF-8">
 	<title>Filters</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<!-- Jquery core -->
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-
-	<!-- D3 core -->
-	<script type="text/javascript" src="js/d3.min.js"></script>
-
 	<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=PT+Sans'>
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/styleFilters.css">
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-
-	<!-- Angular Material style sheet -->
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-
-	<!-- Angular -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
-
-	<!-- Angular Material requires Angular.js Libraries -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
-
-	<!-- Angular Material Library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
-
-	<!-- app js -->
-	<script src="./app.js"></script>
-
-	<!-- services -->
-	<!-- user -->
-	<script src="./services/user.service.client.js"></script>
-	<!-- post -->
-	<script src="./services/post.service.client.js"></script>
-	<!-- filter -->
-	<script src="./services/filter.service.client.js"></script>
 
 </head>
 
@@ -79,10 +46,19 @@
 						</div>
 					<div class="row svg-class">
 						<div class="col-7 button-move">
-							<p>Select a petal to add a person to your dandelion</p>
+							<p>{{plusdesc}}</p>
 						</div>
-						<div class="col-2 button-mv">
-							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						<div class="col-2 button-mv" ng-show="plus">
+							<button class="w3-button w3-teal w3-circle" ng-click="onSelectAdd()">+</button>
+						</div>
+						<div class="col-3 button-mv">
+							<div class="circle" ng-if="dandelion">
+								<span ><i class="fa fa-circle"></i></span>
+							</div>
+							<div class="circlenum" ng-if="dandelion">
+								<span >{{acquaintancesInYourArea.length}}</span>
+							</div>
+							<button class="w3-button w3-teal" ng-if="dandelion" ng-click="onSelectMessage()">Go</button>
 						</div>
 					</div>
 				</div>
@@ -103,16 +79,25 @@
 						</div>
 					<div class="row svg-class">
 						<div class="col-7 button-move">
-							<p>Select a petal to add a person to your dandelion</p>
+							<p>{{plusdesc}}</p>
 						</div>
-						<div class="col-2 button-mv">
-							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						<div class="col-2 button-mv" ng-show="plus">
+							<button class="w3-button w3-teal w3-circle" ng-click="onSelectAdd()">+</button>
+						</div>
+						<div class="col-3 button-mv">
+							<div class="circle" ng-if="dandelion">
+								<span ><i class="fa fa-circle"></i></span>
+							</div>
+							<div class="circlenum" ng-if="dandelion">
+								<span >{{acquaintancesInYourArea.length}}</span>
+							</div>
+							<button class="w3-button w3-teal" ng-if="dandelion" ng-click="onSelectMessage()">Go</button>
 						</div>
 					</div>
 				</div>
 
 				<div ng-show="gatewayfollowers" md-swipe-right="onSwipeRightGatewayFollowers($event, $target)" md-swipe-left="onSwipeLeftGatewayFollowers($event, $target)" class="carousel-item active">
-					<h2 class="text-center text-uppercase text-secondary mb-0 h2-class">Gateway to the outside</h2>
+					<h2 class="text-center text-uppercase text-secondary mb-0 h2-class">Connected to new people</h2>
 					<div class="row svg-class">
 							<div class="col-lg-8 mx-auto">
 								<div class="row justify-content-center">
@@ -127,10 +112,19 @@
 					</div>
 					<div class="row svg-class">
 						<div class="col-7 button-move">
-							<p>Select a petal to add a person to your dandelion</p>
+							<p>{{plusdesc}}</p>
 						</div>
-						<div class="col-2 button-mv">
-							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						<div class="col-2 button-mv" ng-show="plus">
+							<button class="w3-button w3-teal w3-circle" ng-click="onSelectAdd()">+</button>
+						</div>
+						<div class="col-3 button-mv">
+							<div class="circle" ng-if="dandelion">
+								<span ><i class="fa fa-circle"></i></span>
+							</div>
+							<div class="circlenum" ng-if="dandelion">
+								<span >{{acquaintancesInYourArea.length}}</span>
+							</div>
+							<button class="w3-button w3-teal" ng-if="dandelion" ng-click="onSelectMessage()">Go</button>
 						</div>
 					</div>
 				</div>
@@ -152,10 +146,19 @@
 					</div>
 					<div class="row svg-class">
 						<div class="col-7 button-move">
-							<p>Select a petal to add a person to your dandelion</p>
+							<p>{{plusdesc}}</p>
 						</div>
-						<div class="col-2 button-mv">
-							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						<div class="col-2 button-mv" ng-show="plus">
+							<button class="w3-button w3-teal w3-circle" ng-click="onSelectAdd()">+</button>
+						</div>
+						<div class="col-3 button-mv">
+							<div class="circle" ng-if="dandelion">
+								<span ><i class="fa fa-circle"></i></span>
+							</div>
+							<div class="circlenum" ng-if="dandelion">
+								<span >{{acquaintancesInYourArea.length}}</span>
+							</div>
+							<button class="w3-button w3-teal" ng-if="dandelion" ng-click="onSelectMessage()">Go</button>
 						</div>
 					</div>
 				</div>
@@ -177,10 +180,19 @@
 					</div>
 					<div class="row svg-class">
 						<div class="col-7 button-move">
-							<p>Select a petal to add a person to your dandelion</p>
+							<p>{{plusdesc}}</p>
 						</div>
-						<div class="col-2 button-mv">
-							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						<div class="col-2 button-mv" ng-show="plus">
+							<button class="w3-button w3-teal w3-circle" ng-click="onSelectAdd()">+</button>
+						</div>
+						<div class="col-3 button-mv">
+							<div class="circle" ng-if="dandelion">
+								<span ><i class="fa fa-circle"></i></span>
+							</div>
+							<div class="circlenum" ng-if="dandelion">
+								<span >{{acquaintancesInYourArea.length}}</span>
+							</div>
+							<button class="w3-button w3-teal" ng-if="dandelion" ng-click="onSelectMessage()">Go</button>
 						</div>
 					</div>
 				</div>
@@ -202,10 +214,19 @@
 					</div>
 					<div class="row svg-class">
 						<div class="col-7 button-move">
-							<p>Select a petal to add a person to your dandelion</p>
+							<p>{{plusdesc}}</p>
 						</div>
-						<div class="col-2 button-mv">
-							<button class="w3-button w3-teal" ng-click="onSelectMessage()">Dandelion</button>
+						<div class="col-2 button-mv" ng-show="plus">
+							<button class="w3-button w3-teal w3-circle" ng-click="onSelectAdd()">+</button>
+						</div>
+						<div class="col-3 button-mv">
+							<div class="circle" ng-if="dandelion">
+								<span ><i class="fa fa-circle"></i></span>
+							</div>
+							<div class="circlenum" ng-if="dandelion">
+								<span >{{acquaintancesInYourArea.length}}</span>
+							</div>
+							<button class="w3-button w3-teal" ng-if="dandelion" ng-click="onSelectMessage()">Go</button>
 						</div>
 					</div>
 				</div>
@@ -225,19 +246,22 @@
 							</div>
 					</div>
 					<div class="row svg-class">
-						<div class="col-7 button-move">
+						<div class="col-6 button-move">
 							{{sendmessage}}
 							<textarea ng-model="sendnewmessage" id="textpost" maxlength="280" ng-keypress="clicked()"></textarea>
-							<p class="text-right">{{ 280 - sendmessage.length - sendnewmessage.length + ' Char left' }}</p>
+							<div class="row text-right">
+								<p>{{ 280 - sendmessage.length - sendnewmessage.length + ' Char left' }}</p></div>
 						</div>
-						<div class="col-2 button-mv">
-							<br>
-							<button class="w3-button w3-teal" ng-click="sendMessage()">Tweet</button>
+						<div class="col-4 button-mv">
+							<div class="row postbtn">
+								<button class="w3-button w3-teal " ng-click="sendMessage()">Post to dandelion</button>
+							</div>
+							<div class="row filterbtn">
+								<button class="w3-button w3-teal " ng-click="backtofilter()">Back to Filters</button>
+							</div>
 						</div>
 					</div>
 				</div>
-
-
 			</div>
 		</div>
 

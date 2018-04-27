@@ -1,4 +1,5 @@
 (function (app) {
+    console.log("App.js is loaded.");
     angular
         .module("Yempo", ['ngRoute', 'ngMaterial', 'ngMessages'])
         .controller("LoginController",LoginController)
@@ -1516,6 +1517,7 @@
 
     function LoginController($scope,userService,$location, $anchorScroll) {
         $scope.login = login;
+        console.log("inside login controller");
         function login(user) {
             $scope.error = null;
             var user = {
@@ -1543,14 +1545,17 @@
     function RegisterController($location, userService, $routeParams, $anchorScroll, $route, $scope) {
         $scope.register = register;
 
+        console.log("inside register controller");
+
         function register(user) {
-            console.log("inside reg");
             $scope.error = null;
             var user = {
                 email : user.username,
                 password : user.password,
                 verifypassword : user.verifypassword,
-                registrationkey : user.registrationkey
+                registrationkey : user.registrationkey,
+                name : user.name,
+                screenname : user.screenname
             };
             if (user.password !== user.verifypassword) {
                 $scope.error = {
@@ -1580,7 +1585,8 @@
     }
 
     function ProfileController($location, userService, $routeParams, $anchorScroll, $route, $scope) {
-        $scope.userId = $routeParams.userId;
+
+        console.log("inside Profile controller");$scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
         $scope.twitterLogin = '/login/twitter';
         $scope.displayUser = displayUser;
@@ -1638,6 +1644,7 @@
     function ReachController($location, userService, postService, $routeParams, $anchorScroll, $route, $scope) {
         $scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
+        console.log("inside reach controller");
         $scope.openSlideMenu = openSlideMenu;
         $scope.closeSlideMenu = closeSlideMenu;
         $scope.openProfile = openProfile;
@@ -1698,6 +1705,8 @@
         $scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
 
+        console.log("inside feed controller");
+
         var last = {
             bottom: false,
             top: true,
@@ -1733,7 +1742,7 @@
                 $mdToast.simple()
                     .content($scope.error)
                     .position($scope.getToastPosition())
-                    .hideDelay(1000)
+                    .hideDelay(750)
             );
         };
         $scope.displayFeed = displayFeed;
@@ -1767,6 +1776,7 @@
         init();
 
         function searchPost() {
+            console.log("inside searchPost");
             if($scope.search !== ""){
                 postService.getFeed($scope.userId,$scope.token)
                     .then(feed => {
@@ -1860,6 +1870,7 @@
 
         function createPost(newpost) {
             $scope.error = null;
+            console.log("inside create post");
             var post = {
                 text : newpost.text
         };
@@ -1875,7 +1886,7 @@
                         $scope.error = " Oops! Something went wrong. Please try again later ";
                         showSimpleToast();
                     }
-                    init();
+                    //init();
                 });
         }
 
@@ -2026,9 +2037,14 @@
         $scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
 
+        console.log("inside filter controller");
         // to be used to send messages to selected acquaintances
         $scope.acquaintancesInYourArea = [];
         $scope.colorsInYourArea = [];
+
+        $scope.plus = 1;
+        $scope.plusdesc = "Select a petal to add a person to your dandelion";
+        $scope.dandelion = undefined;
 
         $scope.sendmessage = "";
         $scope.sendnewmessage = "";
@@ -2050,6 +2066,7 @@
         $scope.openSlideMenu = openSlideMenu;
         $scope.closeSlideMenu = closeSlideMenu;
         $scope.clicked = clicked;
+        $scope.onSelectAdd = onSelectAdd;
 
         $scope.onSwipeLeftMostFollowers = function(ev, target) {
             $scope.mostfollowers = undefined;
@@ -2226,6 +2243,23 @@
             $scope.sendmessage = tags;
         }
 
+        function onSelectAdd() {
+            $scope.plus = undefined;
+            $scope.plusdesc = "Go see your created dandelion";
+            $scope.dandelion = 1;
+            init();
+        }
+
+        $scope.backtofilter = function() {
+            $scope.mostfollowers = 1;
+            $scope.leastfollowers = undefined;
+            $scope.gatewayfollowers = undefined;
+            $scope.mostactivefollowers = undefined;
+            $scope.leastactivefollowers = undefined;
+            $scope.mostinteractivefollowers = undefined;
+            $scope.messagefollowers = undefined;
+        };
+
         $scope.sendMessage = function() {
             var post = {
                 text : $scope.sendmessage + $scope.sendnewmessage
@@ -2306,6 +2340,7 @@
 
 
     function AppConfig($routeProvider) {
+        console.log("inside App Config");
         $routeProvider
             .when('/', {
                 templateUrl: 'login.html'

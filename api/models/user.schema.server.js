@@ -10,8 +10,8 @@ var userSchema = mongoose.Schema({
 		name: {type: String}
 	},
     twitter: {
-		token: {type: String},
-		tokensecret: {type: String},
+        token: {type: String, default : "token"},
+		tokensecret: {type: String, default : "tokensecret"},
 		screenname: {type: String},
 		followers : {type : Array , default : [] },
 		mutualconnections : {type : Array , default : [] },

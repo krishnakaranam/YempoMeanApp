@@ -34,10 +34,18 @@
 					<div class="password-validate-input" data-validate="Password is required">
 						<input ng-model="user.verifypassword" class="input-password" type="password" name="pass" placeholder="Retype Password" required>
 					</div>
-					
-					<div class="password-validate-input" data-validate="Registration Key is required">
-						<input ng-model="user.registrationkey" class="input-password" type="text" name="pass" placeholder="Registration Key" required>
-					</div>
+
+		  			<div class="password-validate-input" data-validate="Registration Key is required">
+						  <input ng-model="user.registrationkey" class="input-password" type="text" name="registrationkey" placeholder="Registration Key" required>
+		  			</div>
+
+		  			<div class="password-validate-input" data-validate="name is required">
+						  <input ng-model="user.name" class="input-password" type="text" name="name" placeholder="Name" required>
+		  			</div>
+
+		  			<div class="password-validate-input" data-validate="twitter handle is required">
+						  @<input ng-model="user.screenname" class="input-password" type="text" name="name" placeholder="twitter handle (without @)" required>
+		  			</div>
 
 		  			<div class="signin-form-btn" align = "center">
 						  <button type="submit" class="signin-btn">register</button>

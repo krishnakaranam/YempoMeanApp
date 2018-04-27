@@ -18,9 +18,9 @@
     <div ng-show="openslide" id="side-menu" class="side-nav">
       <a class="btn-close" ng-click="closeSlideMenu()">&times;</a>
 	  <span></br></br></span>
-      <a ng-click="openFilters()">Filters</a>
-      <a ng-click="openFeed()">Feed</a>
-	  <a ng-click="openReach()">Reach</a>
+      <a ng-show="connected" ng-click="openFilters()">Filters</a>
+      <a ng-show="connected" ng-click="openFeed()">Feed</a>
+	  <a ng-show="connected" ng-click="openReach()">Reach</a>
       <a href="#">Logout</a>
     </div>
     <div class='card'>
@@ -36,15 +36,12 @@
       <div class="linked-accounts">
         <span class="linked">linked accounts</span>
         <div class="social-media">
-          <div class="fb">
-          <a class="fa fa-facebook-square" href="#"></a>
-          </div>
           <div class="twit">
-          <a class="fa fa-twitter-square" href="#"></a>
+          <a ng-show="connected" class="fa fa-twitter-square" href="#"></a>
           </div>
         </div>
       </div>
-        <button class="btn"  id="addaccount"><a href={{twitterLogin}}>add account</a></button>
+        <button class="btn" ng-show="!connected"  id="addaccount"><a href={{twitterLogin}}>add account</a></button>
       </div>
     </div>
   </div>

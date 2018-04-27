@@ -1607,6 +1607,8 @@
 
         function displayUser(user) {
             $scope.currentUser = user;
+            console.log(user);
+            $scope.connected = user.connected;
         }
 
         function connectTwitter() {

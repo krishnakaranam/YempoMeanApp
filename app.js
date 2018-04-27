@@ -20,14 +20,21 @@ passport.use(new Strategy({
         passReqToCallback : true
     },
     function (req, token, tokenSecret, profile, cb) {
+        //console.log("req is ", req);
+        //console.log("token is ", token);
+        //console.log("the token secret is ", tokenSecret);
+        //console.log("the profile secret is ", profile);
+        UserController.user_connect_twitter(profile,token,tokenSecret);
         return cb(null, profile);
     }));
 
 passport.serializeUser(function(user, cb) {
+    //console.log("serialize user",user);
     cb(null, user);
 });
 
 passport.deserializeUser(function(obj, cb) {
+    //console.log("deserialize obj",obj);
     cb(null, obj);
 });
 
@@ -73,9 +80,8 @@ app.use((req, res, next) => {
 app.get('/login/twitter',passport.authenticate('twitter'));
 
 app.get('/login/twitter/return',
-    passport.authenticate('twitter', { failureRedirect: '/login' }),
+    passport.authenticate('twitter', { failureRedirect: '/' }),
     function(req, res) {
-        //console.log("return request is " , req);
         res.redirect('/');
     });
 

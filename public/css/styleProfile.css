@@ -123,7 +123,7 @@ html {
 .social-media .fb {
   position: absolute;
   font-size: 32px;
-  margin: 8px 0px;
+  margin: 8px 50px;
 }
 
 .social-media .fb a{
@@ -134,7 +134,7 @@ html {
 .social-media .twit {
   position: absolute;
   font-size: 32px;
-  margin: 8px 50px;
+  margin: 8px 0px;
 }
 
 .social-media .twit a{

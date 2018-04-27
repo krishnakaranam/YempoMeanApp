@@ -17,19 +17,14 @@ passport.use(new Strategy({
         passReqToCallback : true
     },
     function (req, token, tokenSecret, profile, cb) {
-        //console.log("req is ", req);
-        console.log("token is ", token);
-        console.log("the token secret is ", tokenSecret);
         return cb(null, profile);
     }));
 
 passport.serializeUser(function(user, cb) {
-    console.log("serialize user",user);
     cb(null, user);
 });
 
 passport.deserializeUser(function(obj, cb) {
-    console.log("deserialize obj",obj);
     cb(null, obj);
 });
 

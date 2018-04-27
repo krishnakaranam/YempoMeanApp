@@ -16,7 +16,7 @@ app.use(passport.session());
 passport.use(new Strategy({
         consumerKey: process.env.CONSUMER_KEY,
         consumerSecret: process.env.CONSUMER_SECRET,
-        callbackURL: 'http://127.0.0.1:3300/login/twitter/return',
+        callbackURL: 'https://karanam-saikrishna-webdev.herokuapp.com/login/twitter/return',
         passReqToCallback : true
     },
     function (req, token, tokenSecret, profile, cb) {

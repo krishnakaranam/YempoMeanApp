@@ -155,7 +155,7 @@ exports.user_connect_twitter = (profile, token, tokenSecret) => {
                                                 mutualconnections : user[0].twitter.mutualconnections,
                                                 gateway : gateway
                                             },
-                                            "profilepic" : profile._json.profile_image_url_https
+                                            "profilepic" : profile._json.profile_image_url_https.replace("_normal", "")
                                         },
 
                                     }).exec();

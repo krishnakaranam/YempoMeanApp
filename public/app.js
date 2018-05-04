@@ -632,7 +632,7 @@
                         })
                         .style("fill", "black");
 
-                    var acquaintancesPetals = canvas.selectAll("circles")
+                    var bridgesPetals = canvas.selectAll("circles")
                         .data(acquaintances)
                         .enter()
                         .append("circle")
@@ -649,7 +649,7 @@
                         })
                         .on('click', toggleColor("royalblue"));
 
-                    var acquaintancesPetalsText = canvas.selectAll("circles")
+                    var bridgesPetalsText = canvas.selectAll("circles")
                         .data(acquaintances)
                         .enter()
                         .append("text")
@@ -664,35 +664,34 @@
                         })
                         .style("fill", "black");
 
-
-                    var bridgesPetals = canvas.selectAll("circles")
-                        .data(bridges)
-                        .enter()
-                        .append("circle")
-                        .attr("cx", function (d, i) {
-                            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-
-                        })
-                        .attr("cy", function (d, i) {
-                            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                        })
-                        .attr("r", rValue)
-                        .style("fill", "gray");
-
-                    var bridgesPetalsText = canvas.selectAll("circles")
-                        .data(bridges)
-                        .enter()
-                        .append("text")
-                        .text(function (d) {
-                            return d;
-                        })
-                        .attr("x", function (d, i) {
-                            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                        })
-                        .attr("y", function (d, i) {
-                            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                        })
-                        .style("fill", "black");
+            //        var bridgesPetals = canvas.selectAll("circles")
+            //            .data(bridges)
+            //            .enter()
+            //            .append("circle")
+            //            .attr("cx", function (d, i) {
+            //                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+//
+            //            })
+            //            .attr("cy", function (d, i) {
+            //                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+            //            })
+            //            .attr("r", rValue)
+            //            .style("fill", "gray");
+//
+            //        var bridgesPetalsText = canvas.selectAll("circles")
+            //            .data(bridges)
+            //            .enter()
+            //            .append("text")
+            //            .text(function (d) {
+            //                return d;
+            //            })
+            //            .attr("x", function (d, i) {
+            //                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+            //            })
+            //            .attr("y", function (d, i) {
+            //                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+            //            })
+            //            .style("fill", "black");
                 }
                 }
             }
@@ -754,6 +753,7 @@
                         var inYourArea = d3.select(element[0]);
                         var insideSVG = inYourArea.select("svg");
                         insideSVG.remove();
+                        mycolor = d3.rgb("#f8f9fa");
 
                         var angle = 360 / (friends.length + acquaintances.length);
 
@@ -858,7 +858,7 @@
                             })
                             .style("fill", "black");
 
-                        var acquaintancesPetals = canvas.selectAll("circles")
+                        var bridgesPetals = canvas.selectAll("circles")
                             .data(acquaintances)
                             .enter()
                             .append("circle")
@@ -875,7 +875,7 @@
                             })
                             .on('click', toggleColor("orange"));
 
-                        var acquaintancesPetalsText = canvas.selectAll("circles")
+                        var bridgesPetalsText = canvas.selectAll("circles")
                             .data(acquaintances)
                             .enter()
                             .append("text")
@@ -891,34 +891,34 @@
                             .style("fill", "black");
 
 
-                        var bridgesPetals = canvas.selectAll("circles")
-                            .data(bridges)
-                            .enter()
-                            .append("circle")
-                            .attr("cx", function (d, i) {
-                                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                    //    var bridgesPetals = canvas.selectAll("circles")
+                    //        .data(bridges)
+                    //        .enter()
+                    //        .append("circle")
+                    //        .attr("cx", function (d, i) {
+                    //            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                    //
+                    //        })
+                    //        .attr("cy", function (d, i) {
+                    //            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                    //        })
+                    //        .attr("r", rValue)
+                    //        .style("fill", mycolor);
 
-                            })
-                            .attr("cy", function (d, i) {
-                                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                            })
-                            .attr("r", rValue)
-                            .style("fill", "gray");
-
-                        var bridgesPetalsText = canvas.selectAll("circles")
-                            .data(bridges)
-                            .enter()
-                            .append("text")
-                            .text(function (d) {
-                                return d;
-                            })
-                            .attr("x", function (d, i) {
-                                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                            })
-                            .attr("y", function (d, i) {
-                                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                            })
-                            .style("fill", "black");
+                    //    var bridgesPetalsText = canvas.selectAll("circles")
+                    //        .data(bridges)
+                    //        .enter()
+                    //        .append("text")
+                    //        .text(function (d) {
+                    //            return d;
+                    //        })
+                    //        .attr("x", function (d, i) {
+                    //            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                    //        })
+                    //        .attr("y", function (d, i) {
+                    //            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                    //        })
+                    //        .style("fill", mycolor);
                     }
                 }
             }
@@ -1085,7 +1085,7 @@
                             })
                             .style("fill", "black");
 
-                        var acquaintancesPetals = canvas.selectAll("circles")
+                        var bridgesPetals = canvas.selectAll("circles")
                             .data(acquaintances)
                             .enter()
                             .append("circle")
@@ -1102,7 +1102,7 @@
                             })
                             .on('click', toggleColor("crimson"));
 
-                        var acquaintancesPetalsText = canvas.selectAll("circles")
+                        var bridgesPetalsText = canvas.selectAll("circles")
                             .data(acquaintances)
                             .enter()
                             .append("text")
@@ -1118,34 +1118,34 @@
                             .style("fill", "black");
 
 
-                        var bridgesPetals = canvas.selectAll("circles")
-                            .data(bridges)
-                            .enter()
-                            .append("circle")
-                            .attr("cx", function (d, i) {
-                                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-
-                            })
-                            .attr("cy", function (d, i) {
-                                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                            })
-                            .attr("r", rValue)
-                            .style("fill", "gray");
-
-                        var bridgesPetalsText = canvas.selectAll("circles")
-                            .data(bridges)
-                            .enter()
-                            .append("text")
-                            .text(function (d) {
-                                return d;
-                            })
-                            .attr("x", function (d, i) {
-                                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                            })
-                            .attr("y", function (d, i) {
-                                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                            })
-                            .style("fill", "black");
+                    //    var bridgesPetals = canvas.selectAll("circles")
+                    //        .data(bridges)
+                    //        .enter()
+                    //        .append("circle")
+                    //        .attr("cx", function (d, i) {
+                    //            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+//
+                    //        })
+                    //        .attr("cy", function (d, i) {
+                    //            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                    //        })
+                    //        .attr("r", rValue)
+                    //        .style("fill", "gray");
+//
+                    //    var bridgesPetalsText = canvas.selectAll("circles")
+                    //        .data(bridges)
+                    //        .enter()
+                    //        .append("text")
+                    //        .text(function (d) {
+                    //            return d;
+                    //        })
+                    //        .attr("x", function (d, i) {
+                    //            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                    //        })
+                    //        .attr("y", function (d, i) {
+                    //            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                    //        })
+                    //        .style("fill", "black");
                     }
                 }
             }
@@ -1313,7 +1313,7 @@
                         })
                         .style("fill", "black");
 
-                    var acquaintancesPetals = canvas.selectAll("circles")
+                    var bridgesPetals = canvas.selectAll("circles")
                         .data(acquaintances)
                         .enter()
                         .append("circle")
@@ -1330,7 +1330,7 @@
                         })
                         .on('click', toggleColor("gold"));
 
-                    var acquaintancesPetalsText = canvas.selectAll("circles")
+                    var bridgesPetalsText = canvas.selectAll("circles")
                         .data(acquaintances)
                         .enter()
                         .append("text")
@@ -1346,34 +1346,34 @@
                         .style("fill", "black");
 
 
-                    var bridgesPetals = canvas.selectAll("circles")
-                        .data(bridges)
-                        .enter()
-                        .append("circle")
-                        .attr("cx", function (d, i) {
-                            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-
-                        })
-                        .attr("cy", function (d, i) {
-                            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                        })
-                        .attr("r", rValue)
-                        .style("fill", "gray");
-
-                    var bridgesPetalsText = canvas.selectAll("circles")
-                        .data(bridges)
-                        .enter()
-                        .append("text")
-                        .text(function (d) {
-                            return d;
-                        })
-                        .attr("x", function (d, i) {
-                            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                        })
-                        .attr("y", function (d, i) {
-                            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                        })
-                        .style("fill", "black");
+                //    var bridgesPetals = canvas.selectAll("circles")
+                //        .data(bridges)
+                //        .enter()
+                //        .append("circle")
+                //        .attr("cx", function (d, i) {
+                //            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+//
+                //        })
+                //        .attr("cy", function (d, i) {
+                //            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                //        })
+                //        .attr("r", rValue)
+                //        .style("fill", "gray");
+//
+                //    var bridgesPetalsText = canvas.selectAll("circles")
+                //        .data(bridges)
+                //        .enter()
+                //        .append("text")
+                //        .text(function (d) {
+                //            return d;
+                //        })
+                //        .attr("x", function (d, i) {
+                //            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                //        })
+                //        .attr("y", function (d, i) {
+                //            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                //        })
+                //        .style("fill", "black");
                 }
                 }
             }
@@ -1506,7 +1506,7 @@
                             })
                             .style("fill", "black");
 
-                        var acquaintancesPetals = canvas.selectAll("circles")
+                        var bridgesPetals = canvas.selectAll("circles")
                             .data(acquaintances)
                             .enter()
                             .append("circle")
@@ -1522,7 +1522,7 @@
                                 return colors[i];
                             });
 
-                        var acquaintancesPetalsText = canvas.selectAll("circles")
+                        var bridgesPetalsText = canvas.selectAll("circles")
                             .data(acquaintances)
                             .enter()
                             .append("text")
@@ -1538,34 +1538,34 @@
                             .style("fill", "black");
 
 
-                        var bridgesPetals = canvas.selectAll("circles")
-                            .data(bridges)
-                            .enter()
-                            .append("circle")
-                            .attr("cx", function (d, i) {
-                                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-
-                            })
-                            .attr("cy", function (d, i) {
-                                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                            })
-                            .attr("r", rValue)
-                            .style("fill", "gray");
-
-                        var bridgesPetalsText = canvas.selectAll("circles")
-                            .data(bridges)
-                            .enter()
-                            .append("text")
-                            .text(function (d) {
-                                return d;
-                            })
-                            .attr("x", function (d, i) {
-                                return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                            })
-                            .attr("y", function (d, i) {
-                                return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
-                            })
-                            .style("fill", "black");
+                    //    var bridgesPetals = canvas.selectAll("circles")
+                    //        .data(bridges)
+                    //        .enter()
+                    //        .append("circle")
+                    //        .attr("cx", function (d, i) {
+                    //            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+//
+                    //        })
+                    //        .attr("cy", function (d, i) {
+                    //            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                    //        })
+                    //        .attr("r", rValue)
+                    //        .style("fill", "gray");
+//
+                    //    var bridgesPetalsText = canvas.selectAll("circles")
+                    //        .data(bridges)
+                    //        .enter()
+                    //        .append("text")
+                    //        .text(function (d) {
+                    //            return d;
+                    //        })
+                    //        .attr("x", function (d, i) {
+                    //            return myCx + Math.cos((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                    //        })
+                    //        .attr("y", function (d, i) {
+                    //            return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue1;
+                    //        })
+                    //        .style("fill", "black");
                     }
                 }
             }
@@ -1764,6 +1764,7 @@
         var formData = new FormData();
         $scope.myFiles = function($files) {
             formData.append('image', $files[0]);
+            $scope.form = "defined";
         }
 
         var last = {
@@ -1820,6 +1821,7 @@
         $scope.closeSlideMenu = closeSlideMenu;
         $scope.openWritePost = openWritePost;
         $scope.closeWritePost = closeWritePost;
+        $scope.typing = typing;
         $scope.enlarge = enlarge;
         $scope.searchPost = searchPost;
         $scope.selectSort = selectSort;
@@ -1830,6 +1832,8 @@
             userService.findUserById($scope.userId,$scope.token)
                 .then(displayUser, profileError);
             $scope.selectsort = "sort";
+            $scope.postit = "create";
+            $scope.form = undefined;
         }
 
         init();
@@ -1929,23 +1933,84 @@
 
         function createPost(newpost) {
             $scope.error = null;
-            var post = {
-                text : newpost.text,
-                media : $scope.mediaid
-        };
-            postService.createPost(post, $scope.userId, $scope.token)
-                .then(function (postResponse) {
-                    if (postResponse) {
-                        $scope.error = postResponse.message;
-                        showSimpleToast();
-                        newpost.text = "";
-                        closeWritePost();
-                    }
-                    else {
-                        $scope.error = " Oops! Something went wrong. Please try again later ";
-                        showSimpleToast();
-                    }
-                });
+            console.log("$scope.postit is ",$scope.postit);
+            console.log("$scope.form is ",$scope.form);
+            if($scope.postit!= undefined) {
+                $scope.postit = undefined;
+                if($scope.form != undefined){
+                    postService.createImage(formData, $scope.userId, $scope.token)
+                        .then(function (postResponse) {
+                            if (postResponse) {
+                                var post = {
+                                    text: newpost.text,
+                                    media: postResponse.media
+                                };
+                                postService.createPost(post, $scope.userId, $scope.token)
+                                    .then(function (postResponse) {
+                                        if (postResponse) {
+                                            $scope.error = postResponse.message;
+                                            showSimpleToast();
+                                            newpost.text = "";
+                                            closeWritePost();
+                                            init();
+                                        }
+                                        else {
+                                            $scope.error = " Oops! Something went wrong. Please try again later ";
+                                            showSimpleToast();
+                                            init();
+                                        }
+                                    });
+                            }
+                            else {
+                                var post = {
+                                    text: newpost.text,
+                                    media: $scope.mediaid
+                                };
+                                postService.createPost(post, $scope.userId, $scope.token)
+                                    .then(function (postResponse) {
+                                        if (postResponse) {
+                                            $scope.error = postResponse.message;
+                                            showSimpleToast();
+                                            newpost.text = "";
+                                            closeWritePost();
+                                            init();
+                                        }
+                                        else {
+                                            $scope.error = " Oops! Something went wrong. Please try again later ";
+                                            showSimpleToast();
+                                            init();
+                                        }
+                                    });
+                            }
+                        });
+                } else {
+                    var post = {
+                        text: newpost.text,
+                        media: $scope.mediaid
+                    };
+                    postService.createPost(post, $scope.userId, $scope.token)
+                        .then(function (postResponse) {
+                            if (postResponse) {
+                                $scope.error = postResponse.message;
+                                showSimpleToast();
+                                newpost.text = "";
+                                closeWritePost();
+                                init();
+                            }
+                            else {
+                                $scope.error = " Oops! Something went wrong. Please try again later ";
+                                showSimpleToast();
+                                init();
+                            }
+                        });
+                }
+
+            }
+        }
+
+
+        function typing(){
+            $scope.createPost = "defined";
         }
 
         function getFeed() {

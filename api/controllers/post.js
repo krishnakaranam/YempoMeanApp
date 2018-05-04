@@ -84,11 +84,11 @@ exports.create_post = (req, res, next) => {
                     access_token_secret:  user[0].twitter.tokensecret
                 });
 
-                if(req.body.media == 'null'){
-                    var statusOptions = { status: req.body.text.substr(0, 280) };
-                } else {
-                    var statusOptions = { media_ids: new Array(req.body.media),
-                                          status: req.body.text.substr(0, 280) };
+                var statusOptions = { status: req.body.text.substr(0, 280) };
+
+                if(req.body.media != 'null'){
+                    statusOptions = { media_ids: new Array(req.body.media),
+                                      status: req.body.text.substr(0, 280) };
                 }
 
                 T.post('statuses/update', statusOptions, function (err, data, response) {
@@ -98,28 +98,54 @@ exports.create_post = (req, res, next) => {
                         });
                     }
                     else{
-                        const post = new Post({
-                            _id: new mongoose.Types.ObjectId(),
-                            userid: req.params.userId,
-                            creatorname: data.user.name,
-                            creatorprofilepic: user[0].profilepic,
-                            text: req.body.text,
-                            twitter : {
-                            	url : "https://twitter.com/"+data.user.screen_name+"/status/"+data.id_str,
-								postid : data.id_str }
-                        });
-                        post
-                            .save()
-                            .then(result => {
-                                res.status(201).json({
-                                    message: "Created post successfully"
-                                });
-                            })
-                            .catch(err => {
-                                res.status(500).json({
-                                    error: err
-                                });
+                        if(data.entities.media != undefined){
+                            const post = new Post({
+                                _id: new mongoose.Types.ObjectId(),
+                                userid: req.params.userId,
+                                creatorname: data.user.name,
+                                creatorprofilepic: user[0].profilepic,
+                                text: req.body.text,
+                                image : data.entities.media[0].media_url_https,
+                                twitter : {
+                                    url : "https://twitter.com/"+data.user.screen_name+"/status/"+data.id_str,
+                                    postid : data.id_str }
                             });
+                            post
+                                .save()
+                                .then(result => {
+                                    res.status(201).json({
+                                        message: "Created post successfully"
+                                    });
+                                })
+                                .catch(err => {
+                                    res.status(500).json({
+                                        error: err
+                                    });
+                                });
+                        }else {
+                            const post = new Post({
+                                _id: new mongoose.Types.ObjectId(),
+                                userid: req.params.userId,
+                                creatorname: data.user.name,
+                                creatorprofilepic: user[0].profilepic,
+                                text: req.body.text,
+                                twitter : {
+                                    url : "https://twitter.com/"+data.user.screen_name+"/status/"+data.id_str,
+                                    postid : data.id_str }
+                            });
+                            post
+                                .save()
+                                .then(result => {
+                                    res.status(201).json({
+                                        message: "Created post successfully"
+                                    });
+                                })
+                                .catch(err => {
+                                    res.status(500).json({
+                                        error: err
+                                    });
+                                });
+                        }
                     }
                 });
             }

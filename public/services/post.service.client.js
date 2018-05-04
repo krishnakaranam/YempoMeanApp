@@ -6,6 +6,7 @@
     function postService($http) {
 
         this.createPost = createPost;
+        this.createImage = createImage;
         this.getFeed = getFeed;
         this.favoritePostById = favoritePostById;
         this.unfavoritePostById = unfavoritePostById;
@@ -25,6 +26,17 @@
             var imageUrl = URL + '/create/image/'+userId;
             return $http.post(url, post,{
                 headers: {'Authorization': "Bearer "+token}
+            })
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function createImage(formdata, userId, token) {
+            var imageUrl = URL + '/create/image/'+userId;
+            return $http.post(imageUrl, formdata,{
+                headers: {'Authorization': "Bearer "+token,
+                          'Content-Type': undefined}
             })
                 .then(function (response) {
                     return response.data;

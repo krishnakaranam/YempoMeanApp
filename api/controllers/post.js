@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 var Twit = require('twit');
 const bcrypt = require("bcrypt");
+const fs = require("fs");
 const User = require("../models/user.schema.server");
 const Post = require("../models/post.schema.server");
 
@@ -82,7 +83,15 @@ exports.create_post = (req, res, next) => {
                     access_token:         user[0].twitter.token,
                     access_token_secret:  user[0].twitter.tokensecret
                 });
-                T.post('statuses/update', { status: req.body.text.substr(0, 280) }, function (err, data, response) {
+
+                if(req.body.media == 'null'){
+                    var statusOptions = { status: req.body.text.substr(0, 280) };
+                } else {
+                    var statusOptions = { media_ids: new Array(req.body.media),
+                                          status: req.body.text.substr(0, 280) };
+                }
+
+                T.post('statuses/update', statusOptions, function (err, data, response) {
                     if (err){
                         res.status(500).json({
                             error: err
@@ -128,7 +137,7 @@ exports.create_post_image = (req, res, next) => {
                 access_token_secret:  user[0].twitter.tokensecret
             });
 
-            var image_path = 'C:\\Users\\krish\\Music\\Yempo_BACKEND_app\\uploads\\2018-04-09T184128.631Zic_launcher.png';
+            var image_path = 'uploads/' + req.file.filename;
             var b64content = fs.readFileSync(image_path, { encoding: 'base64' });
 
             T.post('media/upload', { media_data: b64content }, function (err, media, response) {
@@ -137,43 +146,8 @@ exports.create_post_image = (req, res, next) => {
                         error: err
                     });
                 }
-                else{
-                    T.post('statuses/update', {
-                            media_ids: new Array(media.media_id_string),
-                            status: req.body.text
-                        },
-                        function(err, data, response) {
-                            if (err){
-                                res.status(500).json({
-                                    error: err
-                                });
-                            }
-                            else{
-                                const post = new Post({
-                                    _id: new mongoose.Types.ObjectId(),
-                                    userid: req.params.userId,
-                                    creatorname: data.user.name,
-                                    image: data.entities.media[0].media_url,
-                                    text: data.text,
-                                    twitter : {
-                                        url : "https://twitter.com/"+data.user.screen_name+"/status/"+data.id_str,
-                                        postid : data.id_str }
-                                });
-                                post
-                                    .save()
-                                    .then(result => {
-                                        res.status(201).json({
-                                            message: "Created post successfully"
-                                        });
-                                    })
-                                    .catch(err => {
-                                        res.status(500).json({
-                                            error: err
-                                        });
-                                    });
-                            }
-                        }
-                    );
+                else{ // media_ids: new Array(media.media_id_string),
+                    res.json({ media: media.media_id_string });
                 }
             });
         });

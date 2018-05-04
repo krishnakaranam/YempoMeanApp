@@ -36,6 +36,7 @@
 								<div class="row justify-content-center">
 									<most-followers acquaintancesinyourarea="acquaintancesInYourArea"
 													bridges="bridgesMostFollowers"
+													colors="colorsMostFollowers"
 													acquaintances="acquaintancesMostFollowers"
 													bridgesinyourarea="bridgesInYourArea"
 													colorsinyourarea="colorsInYourArea" >
@@ -70,6 +71,7 @@
 									<least-followers  acquaintancesinyourarea="acquaintancesInYourArea"
 													  bridges="bridgesLeastFollowers"
 													  acquaintances="acquaintancesLeastFollowers"
+													  colors="colorsLeastFollowers"
 													  bridgesinyourarea="bridgesInYourArea"
 													  colorsinyourarea="colorsInYourArea" >
 									</least-followers>
@@ -103,6 +105,7 @@
 									<gateway-followers  acquaintancesinyourarea="acquaintancesInYourArea"
 														bridges="bridgesGatewayFollowers"
 														acquaintances="acquaintancesGatewayFollowers"
+														colors="colorsGatewayFollowers"
 														bridgesinyourarea="bridgesInYourArea"
 														colorsinyourarea="colorsInYourArea" >
 									</gateway-followers>
@@ -137,6 +140,7 @@
 														   acquaintancesinyourarea="acquaintancesInYourArea"
 														   bridges="bridgesMostactiveFollowers"
 														   acquaintances="acquaintancesMostactiveFollowers"
+														   colors="colorsMostactiveFollowers"
 														   bridgesinyourarea="bridgesInYourArea"
 														   colorsinyourarea="colorsInYourArea" >
 									</mostactive-followers>
@@ -171,6 +175,7 @@
 															acquaintancesinyourarea="acquaintancesInYourArea"
 															bridges="bridgesLeastactiveFollowers"
 															acquaintances="acquaintancesLeastactiveFollowers"
+															colors="colorsLeastactiveFollowers"
 															bridgesinyourarea="bridgesInYourArea"
 															colorsinyourarea="colorsInYourArea" >
 									</leastactive-followers>
@@ -205,6 +210,7 @@
 																acquaintancesinyourarea="acquaintancesInYourArea"
 																bridges="bridgesMostInteractiveFollowers"
 																acquaintances="acquaintancesMostInteractiveFollowers"
+																colors="colorsMostInteractiveFollowers"
 																bridgesinyourarea="bridgesInYourArea"
 																colorsinyourarea="colorsInYourArea" >
 									</mostinteractive-followers>
@@ -247,7 +253,7 @@
 					<div class="row svg-class">
 						<div class="col-6 button-move">
 							{{sendmessage}}
-							<textarea ng-model="sendnewmessage" id="textpost" maxlength="280" ng-keypress="clicked()"></textarea>
+							<textarea class = 'form-control' ng-model="sendnewmessage" id="textpost" maxlength="280" ng-keypress="clicked()"></textarea>
 							<div class="row text-right">
 								<p>{{ 280 - sendmessage.length - sendnewmessage.length + ' Char left' }}</p></div>
 						</div>
@@ -255,7 +261,7 @@
 							<div class="row postbtn">
 								<button class="w3-button w3-teal " ng-click="sendMessage()">Tweet</button>
 							</div>
-							<div class="row filterbtn">
+							<div class="row postbtn">
 								<button class="w3-button w3-teal " ng-click="backtofilter()">Filters</button>
 							</div>
 						</div>

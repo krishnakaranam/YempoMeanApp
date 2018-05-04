@@ -1,5 +1,4 @@
 (function (app) {
-    console.log("App.js is loaded.");
     angular
         .module("Yempo", ['ngRoute', 'ngMaterial', 'ngMessages'])
         .controller("LoginController",LoginController)
@@ -8,6 +7,17 @@
         .controller("ReachController",ReachController)
         .controller("FeedController",FeedController)
         .controller("FilterController",FilterController)
+        .directive('fileModel', ['$parse', function($parse) {
+            function fn_link(scope, element, attrs) {
+                var onChange = $parse(attrs.fileModel);
+                element.on('change', function (event) {
+                    onChange(scope, { $files: event.target.files });
+                });
+            };
+            return {
+                link: fn_link
+            }
+        }])
         .directive('mostFollowers', function () {
 
             return {
@@ -18,7 +28,8 @@
                     bridgesinyourarea: '=',
                     colorsinyourarea: '=',
                     acquaintances: '=',
-                    bridges: '='
+                    bridges: '=',
+                    colors: '='
                 },
                 link: function (scope, element, attrs) {
 
@@ -30,17 +41,22 @@
                             var magenta = d3.rgb("magenta").toString();
 
                             if(colStr != magenta){
-                                currentColor = "magenta";
                                 var selectedData = d3.select(this).data();
-                                scope.acquaintancesinyourarea.push(selectedData[0]);
-                                scope.colorsinyourarea.push(color);
-                                return d3.select(this).style("fill", currentColor);
+                                if(scope.acquaintancesinyourarea.indexOf(selectedData[0]) == -1){
+                                    scope.acquaintancesinyourarea.push(selectedData[0]);
+                                    scope.colorsinyourarea.push(color);
+                                    var i = scope.acquaintances.indexOf(selectedData[0]);
+                                    scope.colors[i] = "magenta";
+                                    currentColor = "magenta";
+                                    return d3.select(this).style("fill", currentColor);
+                                }
                             } else {
                                 var selectedData = d3.select(this).data();
                                 var i = scope.acquaintancesinyourarea.indexOf(selectedData[0]);
                                 if(i != -1) {
                                     scope.acquaintancesinyourarea.splice(i, 1);
                                     scope.colorsinyourarea.splice(i, 1);
+                                    scope.colors[scope.acquaintances.indexOf(selectedData[0])] = color;
                                 }
                                 return d3.select(this).style("fill", color);
                             }
@@ -49,13 +65,13 @@
 
                     scope.$watch(function() {
                         try {
-                            drawDandelion(scope.acquaintances, scope.bridges,[]);
+                            drawDandelion(scope.acquaintances, scope.bridges, scope.colors,[]);
                         }
                         catch(err) {
                         }
                     }, true);
 
-                    function drawDandelion(acquaintances, bridges, friends) {
+                    function drawDandelion(acquaintances, bridges, colors, friends) {
 
                         var inYourArea = d3.select(element[0]);
                         var insideSVG = inYourArea.select("svg");
@@ -175,7 +191,9 @@
                                 return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
                             })
                             .attr("r", rValue)
-                            .style("fill", "red")
+                            .style("fill", function (d, i) {
+                                return colors[i];
+                            })
                             .on('click', toggleColor("red"));
 
                         var acquaintancesPetalsText = canvas.selectAll("circles")
@@ -235,7 +253,8 @@
                     bridgesinyourarea: '=',
                     colorsinyourarea: '=',
                     acquaintances: '=',
-                    bridges: '='
+                    bridges: '=',
+                    colors: '='
                 },
                 link: function (scope, element, attrs) {
 
@@ -247,17 +266,22 @@
                             var magenta = d3.rgb("magenta").toString();
 
                             if(colStr != magenta){
-                                currentColor = "magenta";
                                 var selectedData = d3.select(this).data();
-                                scope.acquaintancesinyourarea.push(selectedData[0]);
-                                scope.colorsinyourarea.push(color);
-                                return d3.select(this).style("fill", currentColor);
+                                if(scope.acquaintancesinyourarea.indexOf(selectedData[0]) == -1){
+                                    scope.acquaintancesinyourarea.push(selectedData[0]);
+                                    scope.colorsinyourarea.push(color);
+                                    var i = scope.acquaintances.indexOf(selectedData[0]);
+                                    scope.colors[i] = "magenta";
+                                    currentColor = "magenta";
+                                    return d3.select(this).style("fill", currentColor);
+                                }
                             } else {
                                 var selectedData = d3.select(this).data();
                                 var i = scope.acquaintancesinyourarea.indexOf(selectedData[0]);
                                 if(i != -1) {
                                     scope.acquaintancesinyourarea.splice(i, 1);
                                     scope.colorsinyourarea.splice(i, 1);
+                                    scope.colors[scope.acquaintances.indexOf(selectedData[0])] = color;
                                 }
                                 return d3.select(this).style("fill", color);
                             }
@@ -266,13 +290,13 @@
 
                     scope.$watch(function() {
                         try {
-                            drawDandelion(scope.acquaintances, scope.bridges,[]);
+                            drawDandelion(scope.acquaintances, scope.bridges, scope.colors,[]);
                         }
                         catch(err) {
                         }
                     }, true);
 
-                function drawDandelion(acquaintances, bridges, friends) {
+                function drawDandelion(acquaintances, bridges, colors, friends) {
 
                     var inYourArea = d3.select(element[0]);
                     var insideSVG = inYourArea.select("svg");
@@ -393,7 +417,9 @@
                             return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
                         })
                         .attr("r", rValue)
-                        .style("fill", "deepskyblue")
+                        .style("fill", function (d, i) {
+                            return colors[i];
+                        })
                         .on('click', toggleColor("deepskyblue"));
 
                     var acquaintancesPetalsText = canvas.selectAll("circles")
@@ -454,7 +480,8 @@
                     bridgesinyourarea: '=',
                     colorsinyourarea: '=',
                     acquaintances: '=',
-                    bridges: '='
+                    bridges: '=',
+                    colors: '='
                 },
                 link: function (scope, element, attrs) {
 
@@ -466,17 +493,22 @@
                             var magenta = d3.rgb("magenta").toString();
 
                             if(colStr != magenta){
-                                currentColor = "magenta";
                                 var selectedData = d3.select(this).data();
-                                scope.acquaintancesinyourarea.push(selectedData[0]);
-                                scope.colorsinyourarea.push(color);
-                                return d3.select(this).style("fill", currentColor);
+                                if(scope.acquaintancesinyourarea.indexOf(selectedData[0]) == -1){
+                                    scope.acquaintancesinyourarea.push(selectedData[0]);
+                                    scope.colorsinyourarea.push(color);
+                                    var i = scope.acquaintances.indexOf(selectedData[0]);
+                                    scope.colors[i] = "magenta";
+                                    currentColor = "magenta";
+                                    return d3.select(this).style("fill", currentColor);
+                                }
                             } else {
                                 var selectedData = d3.select(this).data();
                                 var i = scope.acquaintancesinyourarea.indexOf(selectedData[0]);
                                 if(i != -1) {
                                     scope.acquaintancesinyourarea.splice(i, 1);
                                     scope.colorsinyourarea.splice(i, 1);
+                                    scope.colors[scope.acquaintances.indexOf(selectedData[0])] = color;
                                 }
                                 return d3.select(this).style("fill", color);
                             }
@@ -485,13 +517,13 @@
 
                     scope.$watch(function() {
                         try {
-                            drawDandelion(scope.acquaintances, scope.bridges,[]);
+                            drawDandelion(scope.acquaintances, scope.bridges, scope.colors,[]);
                         }
                         catch(err) {
                         }
                     }, true);
 
-                function drawDandelion(acquaintances, bridges, friends) {
+                function drawDandelion(acquaintances, bridges, colors, friends) {
 
                     var inYourArea = d3.select(element[0]);
                     var insideSVG = inYourArea.select("svg");
@@ -612,7 +644,9 @@
                             return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
                         })
                         .attr("r", rValue)
-                        .style("fill", "royalblue")
+                        .style("fill", function (d, i) {
+                            return colors[i];
+                        })
                         .on('click', toggleColor("royalblue"));
 
                     var acquaintancesPetalsText = canvas.selectAll("circles")
@@ -673,7 +707,8 @@
                     bridgesinyourarea: '=',
                     colorsinyourarea: '=',
                     acquaintances: '=',
-                    bridges: '='
+                    bridges: '=',
+                    colors: '='
                 },
                 link: function (scope, element, attrs) {
 
@@ -685,17 +720,22 @@
                             var magenta = d3.rgb("magenta").toString();
 
                             if(colStr != magenta){
-                                currentColor = "magenta";
                                 var selectedData = d3.select(this).data();
-                                scope.acquaintancesinyourarea.push(selectedData[0]);
-                                scope.colorsinyourarea.push(color);
-                                return d3.select(this).style("fill", currentColor);
+                                if(scope.acquaintancesinyourarea.indexOf(selectedData[0]) == -1){
+                                    scope.acquaintancesinyourarea.push(selectedData[0]);
+                                    scope.colorsinyourarea.push(color);
+                                    var i = scope.acquaintances.indexOf(selectedData[0]);
+                                    scope.colors[i] = "magenta";
+                                    currentColor = "magenta";
+                                    return d3.select(this).style("fill", currentColor);
+                                }
                             } else {
                                 var selectedData = d3.select(this).data();
                                 var i = scope.acquaintancesinyourarea.indexOf(selectedData[0]);
                                 if(i != -1) {
                                     scope.acquaintancesinyourarea.splice(i, 1);
                                     scope.colorsinyourarea.splice(i, 1);
+                                    scope.colors[scope.acquaintances.indexOf(selectedData[0])] = color;
                                 }
                                 return d3.select(this).style("fill", color);
                             }
@@ -704,13 +744,13 @@
 
                     scope.$watch(function() {
                         try {
-                            drawDandelion(scope.acquaintances, scope.bridges,[]);
+                            drawDandelion(scope.acquaintances, scope.bridges, scope.colors,[]);
                         }
                         catch(err) {
                         }
                     }, true);
 
-                    function drawDandelion(acquaintances, bridges, friends) {
+                    function drawDandelion(acquaintances, bridges, colors, friends) {
                         var inYourArea = d3.select(element[0]);
                         var insideSVG = inYourArea.select("svg");
                         insideSVG.remove();
@@ -830,7 +870,9 @@
                                 return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
                             })
                             .attr("r", rValue)
-                            .style("fill", "orange")
+                            .style("fill", function (d, i) {
+                                return colors[i];
+                            })
                             .on('click', toggleColor("orange"));
 
                         var acquaintancesPetalsText = canvas.selectAll("circles")
@@ -891,7 +933,8 @@
                     bridgesinyourarea: '=',
                     colorsinyourarea: '=',
                     acquaintances: '=',
-                    bridges: '='
+                    bridges: '=',
+                    colors: '='
                 },
                 link: function (scope, element, attrs) {
 
@@ -903,17 +946,22 @@
                             var magenta = d3.rgb("magenta").toString();
 
                             if(colStr != magenta){
-                                currentColor = "magenta";
                                 var selectedData = d3.select(this).data();
-                                scope.acquaintancesinyourarea.push(selectedData[0]);
-                                scope.colorsinyourarea.push(color);
-                                return d3.select(this).style("fill", currentColor);
+                                if(scope.acquaintancesinyourarea.indexOf(selectedData[0]) == -1){
+                                    scope.acquaintancesinyourarea.push(selectedData[0]);
+                                    scope.colorsinyourarea.push(color);
+                                    var i = scope.acquaintances.indexOf(selectedData[0]);
+                                    scope.colors[i] = "magenta";
+                                    currentColor = "magenta";
+                                    return d3.select(this).style("fill", currentColor);
+                                }
                             } else {
                                 var selectedData = d3.select(this).data();
                                 var i = scope.acquaintancesinyourarea.indexOf(selectedData[0]);
                                 if(i != -1) {
                                     scope.acquaintancesinyourarea.splice(i, 1);
                                     scope.colorsinyourarea.splice(i, 1);
+                                    scope.colors[scope.acquaintances.indexOf(selectedData[0])] = color;
                                 }
                                 return d3.select(this).style("fill", color);
                             }
@@ -922,14 +970,14 @@
 
                     scope.$watch(function() {
                         try {
-                            drawDandelion(scope.acquaintances, scope.bridges,[]);
+                            drawDandelion(scope.acquaintances, scope.bridges, scope.colors,[]);
                         }
                         catch(err) {
                         }
                     }, true);
 
 
-                    function drawDandelion(acquaintances, bridges, friends) {
+                    function drawDandelion(acquaintances, bridges, colors, friends) {
                         var inYourArea = d3.select(element[0]);
                         var insideSVG = inYourArea.select("svg");
                         insideSVG.remove();
@@ -1049,7 +1097,9 @@
                                 return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
                             })
                             .attr("r", rValue)
-                            .style("fill", "crimson")
+                            .style("fill", function (d, i) {
+                                return colors[i];
+                            })
                             .on('click', toggleColor("crimson"));
 
                         var acquaintancesPetalsText = canvas.selectAll("circles")
@@ -1110,7 +1160,8 @@
                     bridgesinyourarea: '=',
                     colorsinyourarea: '=',
                     acquaintances: '=',
-                    bridges: '='
+                    bridges: '=',
+                    colors: '='
                 },
                 link: function (scope, element, attrs) {
 
@@ -1122,17 +1173,22 @@
                             var magenta = d3.rgb("magenta").toString();
 
                             if(colStr != magenta){
-                                currentColor = "magenta";
                                 var selectedData = d3.select(this).data();
-                                scope.acquaintancesinyourarea.push(selectedData[0]);
-                                scope.colorsinyourarea.push(color);
-                                return d3.select(this).style("fill", currentColor);
+                                if(scope.acquaintancesinyourarea.indexOf(selectedData[0]) == -1){
+                                    scope.acquaintancesinyourarea.push(selectedData[0]);
+                                    scope.colorsinyourarea.push(color);
+                                    var i = scope.acquaintances.indexOf(selectedData[0]);
+                                    scope.colors[i] = "magenta";
+                                    currentColor = "magenta";
+                                    return d3.select(this).style("fill", currentColor);
+                                }
                             } else {
                                 var selectedData = d3.select(this).data();
                                 var i = scope.acquaintancesinyourarea.indexOf(selectedData[0]);
                                 if(i != -1) {
                                     scope.acquaintancesinyourarea.splice(i, 1);
                                     scope.colorsinyourarea.splice(i, 1);
+                                    scope.colors[scope.acquaintances.indexOf(selectedData[0])] = color;
                                 }
                                 return d3.select(this).style("fill", color);
                             }
@@ -1141,14 +1197,14 @@
 
                     scope.$watch(function() {
                         try {
-                            drawDandelion(scope.acquaintances, scope.bridges,[]);
+                            drawDandelion(scope.acquaintances, scope.bridges, scope.colors,[]);
                         }
                         catch(err) {
                         }
                     }, true);
 
 
-                function drawDandelion(acquaintances, bridges, friends) {
+                function drawDandelion(acquaintances, bridges, colors, friends) {
 
                     var inYourArea = d3.select(element[0]);
                     var insideSVG = inYourArea.select("svg");
@@ -1269,7 +1325,9 @@
                             return myCy + Math.sin((friends.length + i) * Math.PI * angle / 180) * rValue2;
                         })
                         .attr("r", rValue)
-                        .style("fill", "gold")
+                        .style("fill", function (d, i) {
+                            return colors[i];
+                        })
                         .on('click', toggleColor("gold"));
 
                     var acquaintancesPetalsText = canvas.selectAll("circles")
@@ -1336,7 +1394,6 @@
 
                     scope.$watch(function() {
                             drawDandelion(scope.acquaintances, [], scope.colors);
-                            //scope.sendmessage = "@"+scope.acquaintances.join(" @")+" ";
                     }, true);
 
                     function drawDandelion(acquaintances, bridges, colors) {
@@ -1517,7 +1574,6 @@
 
     function LoginController($scope,userService,$location, $anchorScroll) {
         $scope.login = login;
-        console.log("inside login controller");
         function login(user) {
             $scope.error = null;
             var user = {
@@ -1544,8 +1600,6 @@
 
     function RegisterController($location, userService, $routeParams, $anchorScroll, $route, $scope) {
         $scope.register = register;
-
-        console.log("inside register controller");
 
         function register(user) {
             $scope.error = null;
@@ -1586,7 +1640,7 @@
 
     function ProfileController($location, userService, $routeParams, $anchorScroll, $route, $scope) {
 
-        console.log("inside Profile controller");$scope.userId = $routeParams.userId;
+        $scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
         $scope.twitterLogin = '/login/twitter';
         $scope.displayUser = displayUser;
@@ -1607,7 +1661,6 @@
 
         function displayUser(user) {
             $scope.currentUser = user;
-            console.log(user);
             $scope.connected = user.connected;
         }
 
@@ -1646,7 +1699,7 @@
     function ReachController($location, userService, postService, $routeParams, $anchorScroll, $route, $scope) {
         $scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
-        console.log("inside reach controller");
+
         $scope.openSlideMenu = openSlideMenu;
         $scope.closeSlideMenu = closeSlideMenu;
         $scope.openProfile = openProfile;
@@ -1706,8 +1759,12 @@
     function FeedController($location, userService, postService, $routeParams, $anchorScroll, $route, $scope, $mdToast) {
         $scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
+        $scope.mediaid = 'null';
 
-        console.log("inside feed controller");
+        var formData = new FormData();
+        $scope.myFiles = function($files) {
+            formData.append('image', $files[0]);
+        }
 
         var last = {
             bottom: false,
@@ -1872,9 +1929,9 @@
 
         function createPost(newpost) {
             $scope.error = null;
-            console.log("inside create post");
             var post = {
-                text : newpost.text
+                text : newpost.text,
+                media : $scope.mediaid
         };
             postService.createPost(post, $scope.userId, $scope.token)
                 .then(function (postResponse) {
@@ -1888,7 +1945,6 @@
                         $scope.error = " Oops! Something went wrong. Please try again later ";
                         showSimpleToast();
                     }
-                    //init();
                 });
         }
 
@@ -2039,7 +2095,6 @@
         $scope.userId = $routeParams.userId;
         $scope.token = $routeParams.token;
 
-        console.log("inside filter controller");
         // to be used to send messages to selected acquaintances
         $scope.acquaintancesInYourArea = [];
         $scope.colorsInYourArea = [];
@@ -2284,31 +2339,49 @@
         function displayMostFollowers(followerArrray) {
             $scope.acquaintancesMostFollowers = followerArrray.screennames;
             $scope.bridgesMostFollowers = followerArrray.followerlength;
+            if($scope.colorsMostFollowers === undefined){
+                $scope.colorsMostFollowers = Array.from(new Array(5), () => "red");
+            }
         }
 
         function displayLeastFollowers(followerArrray) {
             $scope.acquaintancesLeastFollowers = followerArrray.screennames;
             $scope.bridgesLeastFollowers = followerArrray.followerlength;
+            if($scope.colorsLeastFollowers === undefined){
+                $scope.colorsLeastFollowers = Array.from(new Array(5), () => "deepskyblue");
+            }
         }
 
         function displayGatewayFollowers(followerArrray) {
             $scope.acquaintancesGatewayFollowers = followerArrray.screennames;
             $scope.bridgesGatewayFollowers = followerArrray.followerlength;
+            if($scope.colorsGatewayFollowers === undefined){
+                $scope.colorsGatewayFollowers = Array.from(new Array(5), () => "royalblue");
+            }
         }
 
         function displayMostActiveFollowers(followerArrray) {
             $scope.acquaintancesMostactiveFollowers = followerArrray.screennames;
             $scope.bridgesMostactiveFollowers = followerArrray.followerlength;
+            if($scope.colorsMostactiveFollowers === undefined){
+                $scope.colorsMostactiveFollowers = Array.from(new Array(5), () => "orange");
+            }
         }
 
         function displayLeastActiveFollowers(followerArrray) {
             $scope.acquaintancesLeastactiveFollowers = followerArrray.screennames;
             $scope.bridgesLeastactiveFollowers = followerArrray.followerlength;
+            if($scope.colorsLeastactiveFollowers === undefined){
+                $scope.colorsLeastactiveFollowers = Array.from(new Array(5), () => "crimson");
+            }
         }
 
         function displayMostInteractiveFollowers(followerArrray) {
             $scope.acquaintancesMostInteractiveFollowers = followerArrray.screennames;
             $scope.bridgesMostInteractiveFollowers = followerArrray.followerlength;
+            if($scope.colorsMostInteractiveFollowers === undefined){
+                $scope.colorsMostInteractiveFollowers = Array.from(new Array(5), () => "gold");
+            }
         }
 
         function filterError() {
@@ -2342,7 +2415,6 @@
 
 
     function AppConfig($routeProvider) {
-        console.log("inside App Config");
         $routeProvider
             .when('/', {
                 templateUrl: 'login.html'

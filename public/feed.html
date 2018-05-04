@@ -91,7 +91,10 @@
           <textarea ng-model="newpost.text" maxlength="280" id="textpost" class="write-post" placeholder="  Write post here ..." ng-click="openWritePost()"></textarea>
         </div>
         <div class="attach">
-          <span id='attachment'><i class="fa fa-paperclip"></i></span>
+          <label for="file-input">
+          <i class="fa fa-paperclip" style="pointer-events: none"></i>
+          </label>
+          <input id="file-input" type="file" accept="image/*" file-model="myFiles($files)" style="visibility:hidden;width:0;height:0" />
         </div>
         <hr id="blackline">
 		    <div class="share" id="shpost">

@@ -4,39 +4,27 @@ const multer = require('multer');
 const checkAuth = require('../middleware/check-auth');
 const PostController = require('../controllers/post');
 
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './uploads/');
-  },
-  filename: function(req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname);
-  }
+// multer
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
 });
+var upload = multer({storage: storage});
 
-const fileFilter = (req, file, cb) => {
-  // reject a file
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-    console.log("image input");
-    cb(null, true);
-  } else {
-    console.log("error");
-    cb(null, false);
-  }
-};
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5
-  },
-  fileFilter: fileFilter
-});
+//app.post('/fileupload', upload.single('image'), (req, res, next) => {
+//    res.json({'message': 'File uploaded successfully'});
+//});
+// multer
 
 router.get("/feed/:userId", checkAuth, PostController.get_feed);
 
 router.post("/create/:userId", checkAuth, PostController.create_post);
 
-router.post("/create/image/:userId", checkAuth, upload.single('postImage'), PostController.create_post_image);
+router.post("/create/image/:userId", checkAuth, upload.single('image'), PostController.create_post_image);
 
 router.get("/favorite/:userId/:postId", checkAuth, PostController.favorite_post);
 
